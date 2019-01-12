@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/activity_main_drawer_top_stories"
+            android:title="Top Stories" />
+        <item
+            android:id="@+id/activity_main_drawer_most_popular"
+            android:title="Most Popular" />
+    </group>
+
+    <item android:title="Configuration">
+        <menu>
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/activity_main_drawer_notification"
+                    android:title="Notifications" />
+                <item
+                    android:id="@+id/activity_main_drawer_help"
+                    android:title="Help" />
+                <item
+                    android:id="@+id/activity_main_drawer_about"
+                    android:title="About" />
+            </group>
+        </menu>
+    </item>
+
+</menu>

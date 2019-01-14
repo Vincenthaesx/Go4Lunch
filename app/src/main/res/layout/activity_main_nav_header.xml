@@ -1,27 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/lunch_portrait_login"
     android:gravity="center"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageUserNavHeader"/>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewUserNavHeader"/>
+        android:layout_marginTop="50dp"
+        android:textSize="@dimen/title_size"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:text="@string/app_name"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewEMailNavHeader"/>
+        android:layout_margin="@dimen/margin">
 
+        <ImageView
+            android:contentDescription="@string/navigation_drawer_img_description"
+            android:id="@+id/nav_header_profile_img"
+            android:layout_marginTop="30dp"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:src="@drawable/dining"
+            />
+
+        <TextView
+            android:id="@+id/nav_header_username"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:textColor="@android:color/white"
+            android:layout_toEndOf="@+id/nav_header_profile_img"
+            android:layout_toRightOf="@+id/nav_header_profile_img" />
+
+        <TextView
+            android:id="@+id/nav_header_user_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:textSize="15dp"
+            android:textColor="@android:color/white"
+            android:layout_below="@+id/nav_header_username"
+            android:layout_toEndOf="@+id/nav_header_profile_img"
+            android:layout_toRightOf="@+id/nav_header_profile_img" />
+
+    </RelativeLayout>
 
 </LinearLayout>

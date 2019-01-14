@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">Go4Lunch</string>
+    <string name="app_name">Go4Lunch!</string>
 
     <!-- FACEBOOK PURPOSE -->
     <string name="facebook_application_id" translatable="false">240624886836233</string>
@@ -10,6 +10,16 @@
     <string name="error_unknown_error">Une erreur inconnue s\'est produite&#8230;</string>
     <string name="connection_succeed">Authentification réussie !</string>
     <string name="error_authentication_canceled">Authentification annulée&#8230;</string>
+    <string name="your_lunch">VOTRE MENU</string>
+    <string name="settings">OPTIONS</string>
+    <string name="logout">DECONNECTION</string>
+    <string name="info_no_email_found">Auncune adresse email</string>
+    <string name="info_no_username_found">Aucun nom d\'utilisateur</string>
+
+    <!-- Used in NavigationDrawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_img_description">Profile Image</string>
 
 
 </resources>

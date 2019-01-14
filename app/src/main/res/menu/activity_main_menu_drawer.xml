@@ -5,28 +5,19 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/activity_main_drawer_top_stories"
-            android:title="Top Stories" />
+            android:id="@+id/activity_main_drawer_dining"
+            android:icon="@drawable/dining"
+            android:title="@string/your_lunch" />
         <item
-            android:id="@+id/activity_main_drawer_most_popular"
-            android:title="Most Popular" />
+            android:id="@+id/activity_main_drawer_settings"
+            android:icon="@drawable/settings"
+            android:title="@string/settings" />
+
+        <item
+            android:id="@+id/activity_main_drawer_logout"
+            android:icon="@drawable/power"
+            android:title="@string/logout" />
+
     </group>
-
-    <item android:title="Configuration">
-        <menu>
-            <group android:checkableBehavior="single">
-
-                <item
-                    android:id="@+id/activity_main_drawer_notification"
-                    android:title="Notifications" />
-                <item
-                    android:id="@+id/activity_main_drawer_help"
-                    android:title="Help" />
-                <item
-                    android:id="@+id/activity_main_drawer_about"
-                    android:title="About" />
-            </group>
-        </menu>
-    </item>
 
 </menu>

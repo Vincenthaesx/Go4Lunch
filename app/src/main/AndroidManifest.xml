@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controllers.MainActivity">
+        <activity android:name=".Controllers.MainActivity"
+            android:label="I'm Hungry !">
 
         </activity>
     </application>

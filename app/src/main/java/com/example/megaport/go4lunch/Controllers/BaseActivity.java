@@ -52,13 +52,4 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         };
     }
-
-    // --------------------
-    // UI
-    // --------------------
-
-    protected void configureToolbar(){
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-    }
 }

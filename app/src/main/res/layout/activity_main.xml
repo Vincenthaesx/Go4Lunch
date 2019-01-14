@@ -11,17 +11,16 @@
     tools:context=".Controllers.MainActivity">
 
     <!-- 1 | MainActivity RootView -->
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <!-- Toolbar -->
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/holo_blue_bright"
+            android:background="@color/rouge_oranger"
             app:theme="@style/ToolBarStyle"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
@@ -30,9 +29,21 @@
         <FrameLayout
             android:id="@+id/activity_main_frame_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_above="@id/activity_main_bottom_navigation"/>
 
-    </LinearLayout>
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/activity_main_bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/background_light"
+            app:itemIconTint="@drawable/bottom_navigation_colors"
+            app:itemTextColor="@drawable/bottom_navigation_colors"
+            app:menu="@menu/bottom_navigation_menu"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
 
     <!-- 2 | NavigationView -->
     <android.support.design.widget.NavigationView

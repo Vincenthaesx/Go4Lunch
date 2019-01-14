@@ -21,5 +21,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="navigation_drawer_img_description">Profile Image</string>
 
+    <!-- BOTTOM NAVIGATION VIEW -->
+    <string name="bottom_navigation_menu_map_view">Map View</string>
+    <string name="bottom_navigation_menu_list_view">List View</string>
+    <string name="bottom_navigation_menu_workmates">Workmates</string>
+
 
 </resources>

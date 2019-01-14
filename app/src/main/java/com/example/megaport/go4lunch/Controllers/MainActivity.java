@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,12 +17,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.megaport.go4lunch.Controllers.fragment.listViewFragment;
+import com.example.megaport.go4lunch.Controllers.fragment.mapViewFragment;
+import com.example.megaport.go4lunch.Controllers.fragment.workmatesFragment;
 import com.example.megaport.go4lunch.R;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,9 +34,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // FOR DESIGN
     private DrawerLayout drawerLayout;
     private android.support.v7.widget.Toolbar toolbar;
+    @BindView( R.id.activity_main_bottom_navigation ) BottomNavigationView mBottomNavigationView;
 
     // FOR DATA
     private static final int SIGN_OUT_TASK = 10;
+
+    // FOR FRAGMENTS
+    private listViewFragment fragmentListView;
+    private mapViewFragment fragmentMapView;
+    private workmatesFragment fragmentWorkmates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +50,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView( R.layout.activity_main );
         ButterKnife.bind( this );
 
+        if(savedInstanceState == null) {
+            this.configureAndShowMainFragment();
+        }
+        else {
+            fragmentMapView = (mapViewFragment) getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_layout);
+        }
+
         this.configureToolbar();
         this.configureDrawerLayout();
         this.configureNavigationView();
+        this.configureBottomView();
     }
 
     // -------------
@@ -89,6 +108,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // -------------------
     // CONFIGURATION
     // -------------------
+
+    private void configureAndShowMainFragment(){
+        if (fragmentMapView == null) {
+            fragmentMapView = new mapViewFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.activity_main_frame_layout, fragmentMapView)
+                    .commit();
+        }
+    }
+
+    private void configureBottomView(){
+        mBottomNavigationView.setOnNavigationItemSelectedListener(item -> updateMainFragment( item.getItemId() ));
+    }
     
     private void configureToolbar(){
         this.toolbar = findViewById( R.id.toolbar );
@@ -123,6 +155,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         nav_user.setText(userName);
         nav_email.setText(userEmail);
     }
+
+    // ------------
+    // FRAGMENTS
+    // ------------
+
+    // Generic method that will replace and show a fragment inside the MainActivity Frame Layout
+    private void startTransactionFragment(android.support.v4.app.Fragment fragment){
+        if (!fragment.isVisible()){
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.activity_main_frame_layout, fragment).commit();
+        }
+    }
+
+    // create each fragment page and show it
+
+    private void showMapViewFragment(){
+        if (this.fragmentMapView == null)this.fragmentMapView = mapViewFragment.newInstance();
+        startTransactionFragment(fragmentMapView );
+    }
+
+    private void showListViewFragment(){
+        if (this.fragmentListView == null)this.fragmentListView = listViewFragment.newInstance();
+        startTransactionFragment( fragmentListView );
+    }
+
+    private void showWorkmatesFragment(){
+        if (this.fragmentWorkmates == null)this.fragmentWorkmates = workmatesFragment.newInstance();
+        startTransactionFragment( fragmentWorkmates );
+    }
+
 
     // ------------
     // UTILS
@@ -179,6 +241,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // --------
     // UI
     // --------
+
+    private Boolean updateMainFragment( Integer integer){
+        switch (integer){
+            case R.id.action_map :
+                this.showMapViewFragment();
+                break;
+            case R.id.action_list_view :
+                this.showListViewFragment();
+                break;
+            case R.id.action_workmates :
+                this.showWorkmatesFragment();
+                break;
+            default :
+                break;
+        }
+        return true;
+    }
 
 
 

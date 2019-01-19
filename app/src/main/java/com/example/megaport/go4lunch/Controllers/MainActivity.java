@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // FOR DESIGN
     private DrawerLayout drawerLayout;
     private android.support.v7.widget.Toolbar toolbar;
-    @BindView( R.id.activity_main_bottom_navigation ) BottomNavigationView mBottomNavigationView;
+    @BindView( R.id.bottom_navigation ) BottomNavigationView mBottomNavigationView;
 
     // FOR DATA
     private static final int SIGN_OUT_TASK = 10;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             this.configureAndShowMainFragment();
         }
         else {
-            fragmentMapView = (mapViewFragment) getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_layout);
+            fragmentMapView = (mapViewFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_view);
         }
 
         this.configureToolbar();
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (fragmentMapView == null) {
             fragmentMapView = new mapViewFragment();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.activity_main_frame_layout, fragmentMapView)
+                    .add(R.id.fragment_view, fragmentMapView)
                     .commit();
         }
     }
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     
     private void configureToolbar(){
-        this.toolbar = findViewById( R.id.toolbar );
+        this.toolbar = findViewById( R.id.simple_toolbar );
         setSupportActionBar( toolbar );
     }
 
@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void startTransactionFragment(android.support.v4.app.Fragment fragment){
         if (!fragment.isVisible()){
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.activity_main_frame_layout, fragment).commit();
+                    .replace(R.id.fragment_view, fragment).commit();
         }
     }
 

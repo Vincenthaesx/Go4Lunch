@@ -5,4 +5,5 @@
     <dimen name="margin">10dip</dimen>
     <dimen name="icon_size">70dip</dimen>
     <dimen name="title_size">40sp</dimen>
+    <dimen name="elevation_size">20dp</dimen>
 </resources>

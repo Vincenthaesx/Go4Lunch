@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModel;
 import com.google.android.gms.maps.model.LatLng;
 
 public class CommunicationViewModel extends ViewModel {
+
     public final MutableLiveData<LatLng> currentUserPosition = new MutableLiveData<>();
     public final MutableLiveData<String> currentUserUID = new MutableLiveData<>();
     public final MutableLiveData<Integer> currentUserZoom = new MutableLiveData<>();

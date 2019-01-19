@@ -15,6 +15,8 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.megaport.go4lunch.Controllers.ViewModels.CommunicationViewModel;
 import com.example.megaport.go4lunch.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -29,6 +31,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import java.util.Objects;
 import butterknife.BindView;
@@ -203,7 +207,7 @@ public class mapViewFragment extends BaseFragment implements GoogleApiClient.OnC
             // position on right bottom
             rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
             rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
-            rlp.setMargins(0, 0, 30, 30);
+            rlp.setMargins(0, 0, 70, 70);
             googleMap.getUiSettings().setRotateGesturesEnabled(true);
         } );
     }

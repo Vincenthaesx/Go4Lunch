@@ -37,7 +37,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // GLIDE
-    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 
     //BUTTERKNIFE
@@ -48,7 +48,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.6'
 
     //FIREBASE UI
-    implementation 'com.firebaseui:firebase-ui-auth:4.2.1'
+    implementation 'com.firebaseui:firebase-ui-auth:4.2.1'       // Authentication
+    implementation 'com.firebaseui:firebase-ui-firestore:4.1.0'  // Firestore
+    implementation 'com.firebaseui:firebase-ui-storage:4.1.0'    // FirebaseUI Storage
 
     //EASY PERMISSIONS
     implementation 'pub.devrel:easypermissions:1.1.1'
@@ -56,14 +58,14 @@ dependencies {
     // RETROFIT
 
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 
     // RXJAVA
 
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.10'
 
 
     //FACEBOOK

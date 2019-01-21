@@ -10,6 +10,14 @@
     <string name="facebook_login_protocol_scheme" translatable="false"
         tools:ignore="UnusedResources">fb240624886836233</string>
 
+    <!-- TOOLBAR -->
+    <string name="hungry">I\'m Hungry!</string>
+    <string name="available">Available workmates</string>
+    <string name="chat">Chat</string>
+    <string name="search">Search</string>
+
+    <string name="drawer_no_restaurant_booked">You don\'t booked any restaurant for today!</string>
+
     <!-- MAIN ACTIVITY -->
     <string name="error_unknown_error">Une erreur inconnue s\'est produite&#8230;</string>
     <string name="connection_succeed">Authentification réussie !</string>
@@ -19,10 +27,11 @@
     <string name="logout">DECONNECTION</string>
     <string name="info_no_email_found">Auncune adresse email</string>
     <string name="info_no_username_found">Aucun nom d\'utilisateur</string>
+    <string name="error_no_internet">No internet connection!</string>
 
     <!-- Used in NavigationDrawer -->
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
     <string name="navigation_drawer_img_description">Profile Image</string>
 
     <!-- BOTTOM NAVIGATION VIEW -->
@@ -30,12 +39,22 @@
     <string name="bottom_navigation_menu_list_view">List View</string>
     <string name="bottom_navigation_menu_workmates">Workmates</string>
     <string name="action_search">search action</string>
+    <string name="rational_string">Without these permissions, the application is unable to function properly. They are needed to use geolocation services. Please allow them in order to use this application in the best possible conditions.</string>
 
     <!-- ERROR TEXT -->
     <string name="http_error_message">HttpException, Error code : %1$i</string>
     <string name="timeout_error_message">Request timeout, please check your internet connection</string>
     <string name="exception_error_message">An error occurred, please check your internet connection</string>
     <string name="generic_error_message">An error occurred, please try again</string>
+
+    <!-- RESTAURANT LIST -->
+    <string name="restaurant_closed">Closed</string>
+    <string name="restaurant_opening_not_know">Opening hours are not known</string>
+    <string name="list_unit_distance">%1$sm</string>
+    <string name="restaurant_open_until">Open until %1$s</string>
+    <string name="restaurant_closing_soon">Closing soon (%1$s)</string>
+    <string name="restaurant_mates_number">(%1$d)</string>
+    <string name="no_restaurant_error_message">No restaurants found, try to change your search radius settings</string>
 
     <!-- TOOLBAR -->
     <string name="toolbar_search_title">Search restaurants</string>

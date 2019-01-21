@@ -32,6 +32,13 @@ public class BaseFragment extends Fragment {
     // UTILS
     // -----------------
 
+
+    protected String getTodayDate(){
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        return df.format(c.getTime());
+    }
+
     protected void handleError(Throwable throwable) {
         getActivity().runOnUiThread(() -> {
             if (throwable instanceof HttpException) {

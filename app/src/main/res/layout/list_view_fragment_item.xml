@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin_to_parent"
+    >
+
+    <!-- FIRST LINE -->
+
+    <TextView
+        android:id="@+id/item_textview_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="200dp"
+        android:ellipsize="end"
+        android:layout_marginStart="@dimen/margin_to_parent"
+        android:layout_marginTop="@dimen/margin_to_parent"
+        android:text="NAME_RESTAURANT"
+        android:textColor="@color/colorBlack"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="@dimen/margin_to_parent" />
+
+    <TextView
+        android:id="@+id/item_textview_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DISTANCE"
+        android:textColor="@color/colorGray"
+        android:layout_marginEnd="@dimen/margin_to_parent"
+        android:layout_marginTop="@dimen/margin_to_parent"
+        app:layout_constraintEnd_toStartOf="@id/item_imageview_main_pic"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="@dimen/margin_to_parent" />
+
+    <!-- SECOND LINE -->
+
+    <ImageView
+        android:id="@+id/item_imageview_main_pic"
+        android:layout_width="@dimen/main_picture_size"
+        android:layout_height="@dimen/main_picture_size"
+        android:layout_marginEnd="@dimen/margin_to_parent"
+        android:layout_marginTop="@dimen/margin_to_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="@dimen/margin_to_parent" />
+
+    <TextView
+        android:id="@+id/item_textview_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="@dimen/margin_to_parent"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxWidth="200dp"
+        android:text="ADRESSE"
+        app:layout_constraintBottom_toTopOf="@+id/item_textview_opening"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_textview_name"
+        android:layout_marginLeft="@dimen/margin_to_parent" />
+
+    <ImageView
+        android:id="@+id/item_imageview_mates"
+        android:layout_width="@dimen/mates_picture_size"
+        android:layout_height="@dimen/mates_picture_size"
+        android:layout_marginEnd="@dimen/space_between_word"
+        app:layout_constraintTop_toTopOf="@id/item_textview_address"
+        app:layout_constraintBottom_toBottomOf="@id/item_textview_address"
+        app:layout_constraintEnd_toStartOf="@id/item_textview_mates"
+        android:layout_marginRight="@dimen/space_between_word" />
+
+    <TextView
+        android:id="@+id/item_textview_mates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_to_parent"
+        app:layout_constraintTop_toTopOf="@id/item_imageview_main_pic"
+        app:layout_constraintBottom_toBottomOf="@id/item_imageview_main_pic"
+        app:layout_constraintEnd_toStartOf="@id/item_imageview_main_pic"
+        android:layout_marginRight="@dimen/margin_to_parent" />
+
+    <!-- THIRD LINE -->
+
+    <TextView
+        android:id="@+id/item_textview_opening"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OPENING_TIME"
+        android:layout_marginStart="@dimen/margin_to_parent"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/item_imageview_main_pic"
+        android:layout_marginLeft="@dimen/margin_to_parent" />
+
+    <RatingBar
+        android:id="@+id/item_ratingBar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:theme="@style/RatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_to_parent"
+        android:numStars="3"
+        app:layout_constraintBottom_toBottomOf="@id/item_textview_opening"
+        app:layout_constraintEnd_toStartOf="@id/item_imageview_main_pic"
+        app:layout_constraintTop_toTopOf="@id/item_textview_opening"
+        android:layout_marginRight="@dimen/margin_to_parent" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,17 +1,18 @@
 package com.example.megaport.go4lunch.Controllers;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,38 +21,59 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.megaport.go4lunch.Controllers.Api.RestaurantsHelper;
+import com.example.megaport.go4lunch.Controllers.Api.UserHelper;
+import com.example.megaport.go4lunch.Controllers.ViewModels.CommunicationViewModel;
 import com.example.megaport.go4lunch.Controllers.fragment.listViewFragment;
 import com.example.megaport.go4lunch.Controllers.fragment.mapViewFragment;
 import com.example.megaport.go4lunch.Controllers.fragment.workmatesFragment;
 import com.example.megaport.go4lunch.R;
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import java.util.HashMap;
+import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    // FOR DESIGN
-    private DrawerLayout drawerLayout;
-    private android.support.v7.widget.Toolbar toolbar;
-    @BindView( R.id.bottom_navigation ) BottomNavigationView mBottomNavigationView;
+    @BindView(R.id.activity_main_drawer_layout) DrawerLayout mDrawerLayout;
+    @BindView(R.id.bottom_navigation) BottomNavigationView mBottomNavigationView;
+    @BindView(R.id.simple_toolbar) Toolbar toolbar;
+    @BindView(R.id.activity_main_nav_view) NavigationView mNavigationView;
 
-    // FOR DATA
+    //FOR DATA
     private static final int SIGN_OUT_TASK = 10;
+
+    public static final int TITLE_HUNGRY = R.string.hungry;
 
     // FOR FRAGMENTS
     private listViewFragment fragmentListView;
     private mapViewFragment fragmentMapView;
     private workmatesFragment fragmentWorkmates;
 
+    //Identity each activity with a number
+    public static final int ACTIVITY_SETTINGS = 0;
+    public static final int ACTIVITY_CHAT = 1 ;
+    public static final int ACTIVITY_PLACE_DETAIL = 2 ;
+    public static final int ACTIVITY_LOGIN = 3 ;
+
+    //Default data to create user
+    public static final int DEFAULT_ZOOM = 13;
+    public static final int DEFAULT_SEARCH_RADIUS = 1000;
+    public static final boolean DEFAULT_NOTIFICATION = false;
+
+    protected CommunicationViewModel mViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_main );
-        ButterKnife.bind( this );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         if(savedInstanceState == null) {
             this.configureAndShowMainFragment();
@@ -60,128 +82,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentMapView = (mapViewFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_view);
         }
 
-        this.configureToolbar();
-        this.configureDrawerLayout();
+        this.updateUIWhenCreating();
         this.configureNavigationView();
+        this.configureToolBar();
+        this.configureDrawerLayout();
         this.configureBottomView();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate( R.menu.menu_main, menu );
-
-        final MenuItem searchItem = menu.findItem( R.id.menu_search );
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView( searchItem );
-
-        searchView.setOnQueryTextListener( new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // CODE
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        } );
-
-        return true;
-    }
-
-    // -------------
-    // ACTIONS
-    // -------------
-
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id){
-            case R.id.activity_main_drawer_dining :
-                break;
-            case R.id.activity_main_drawer_settings :
-                break;
-            case R.id.activity_main_drawer_logout :
-                this.signOutUserFromFirebase();
-                break;
-            default:
-                break;
-        }
-        this.drawerLayout.closeDrawer( GravityCompat.START );
-
-        return true;
-    }
-
-    private void startLoginActivity(){
-        Intent intent = new Intent( this, LoginActivity.class );
-        startActivity( intent );
-    }
-
-
-    // ---------
-    @Override
-    public void onBackPressed() {
-        // 5 - Handle back click to close menu
-        if (this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            this.drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    // -------------------
-    // CONFIGURATION
-    // -------------------
-
-    private void configureAndShowMainFragment(){
-        if (fragmentMapView == null) {
-            fragmentMapView = new mapViewFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_view, fragmentMapView)
-                    .commit();
-        }
-    }
-
-    private void configureBottomView(){
-        mBottomNavigationView.setOnNavigationItemSelectedListener(item -> updateMainFragment( item.getItemId() ));
-    }
-    
-    private void configureToolbar(){
-        this.toolbar = findViewById( R.id.simple_toolbar );
-        setSupportActionBar( toolbar );
-    }
-
-    private void configureDrawerLayout(){
-        this.drawerLayout = findViewById( R.id.activity_main_drawer_layout );
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle( this, drawerLayout, toolbar,R.string.navigation_drawer_open, R.string.navigation_drawer_close );
-        drawerLayout.addDrawerListener( toggle );
-        toggle.syncState();
+        this.retrieveCurrentUser();
 
     }
-
-    private void configureNavigationView(){
-        NavigationView navigationView = findViewById( R.id.activity_main_nav_view );
-        navigationView.setNavigationItemSelectedListener(this);
-
-        String userName = getCurrentUser().getDisplayName();
-        String userEmail = getCurrentUser().getEmail();
-        Uri userPhotoUrl = getCurrentUser().getPhotoUrl();
-
-        View hView =  navigationView.getHeaderView(0);
-        ImageView nav_picture = hView.findViewById(R.id.nav_header_profile_img);
-        TextView nav_user = hView.findViewById(R.id.nav_header_username);
-        TextView nav_email = hView.findViewById(R.id.nav_header_user_email);
-
-        Glide.with(getApplicationContext())
-                .load(userPhotoUrl)
-                .apply( RequestOptions.circleCropTransform() )
-                .into(nav_picture);
-        nav_user.setText(userName);
-        nav_email.setText(userEmail);
-    }
-
     // ------------
     // FRAGMENTS
     // ------------
@@ -212,61 +120,215 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    // ------------
-    // UTILS
-    // ------------
+    // ---------------------
+    // ACTIVITY
+    // ---------------------
 
-    protected FirebaseUser getCurrentUser(){
-        return FirebaseAuth.getInstance().getCurrentUser();
+    private void showActivity(int activityIdentifier){
+        switch (activityIdentifier){
+            case ACTIVITY_SETTINGS:
+                break;
+            case ACTIVITY_CHAT:
+                break;
+            case ACTIVITY_PLACE_DETAIL:
+                RestaurantsHelper.getBooking(getCurrentUser().getUid(),getTodayDate()).addOnCompleteListener( bookingTask -> {
+                    if (bookingTask.isSuccessful()){
+                        if (bookingTask.getResult().isEmpty()){
+                            Toast.makeText(this, getResources().getString(R.string.drawer_no_restaurant_booked), Toast.LENGTH_SHORT).show();
+                        }else{
+                            Map<String,Object> extra = new HashMap<>();
+                            for (QueryDocumentSnapshot booking : bookingTask.getResult()){
+                                extra.put("PlaceDetailResult",booking.getData().get("restaurantId"));
+                            }
+                            launchActivity(DetailActivity.class,extra);
+                        }
+
+                    }
+                });
+                break;
+            case ACTIVITY_LOGIN:
+                launchActivity(LoginActivity.class,null);
+                break;
+        }
     }
 
-    protected Boolean isCurrentUserLogged(){
-        return (this.getCurrentUser() != null);
+    private void launchActivity(Class mClass, Map<String,Object> info){
+        Intent intent = new Intent(this, mClass);
+        if (info != null){
+            for (Object key : info.keySet()) {
+                String mKey = (String)key;
+                String value = (String) info.get(key);
+                intent.putExtra(mKey, value);
+            }
+        }
+        startActivity(intent);
     }
 
-    // ---------------
-    // REST REQUESTS
-    // ---------------
+    // ---------------------
+    // ACTIONS
+    // ---------------------
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+
+        // Handle Navigation Item Click
+        int id = item.getItemId();
+
+        switch (id){
+            case R.id.activity_main_drawer_dining :
+                showActivity(ACTIVITY_PLACE_DETAIL);
+                break;
+            case R.id.activity_main_drawer_settings:
+                showActivity(ACTIVITY_SETTINGS);
+                break;
+            case R.id.activity_main_drawer_logout:
+                this.signOutUserFromFirebase();
+                break;
+            default:
+                break;
+        }
+
+        this.mDrawerLayout.closeDrawer(GravityCompat.START);
+
+        return true;
+    }
+
+    // ---------------------
+    // CONFIGURATION
+    // ---------------------
+
+    // show main fragment
+    private void configureAndShowMainFragment(){
+        if (fragmentMapView == null) {
+            fragmentMapView = new mapViewFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_view, fragmentMapView)
+                    .commit();
+        }
+    }
+
+    // Configure Drawer Layout
+    private void configureDrawerLayout(){
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+    // Configure NavigationView
+    private void configureNavigationView(){
+        mNavigationView.setNavigationItemSelectedListener(this);
+    }
+
+    // Configure Toolbar
+    private void configureToolBar(){
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(TITLE_HUNGRY);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Handle back click to close menu
+        if (this.mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            this.mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
+    private void configureBottomView(){
+        mBottomNavigationView.setOnNavigationItemSelectedListener(item -> updateMainFragment( item.getItemId() ));
+    }
+
+    private void retrieveCurrentUser(){
+        mViewModel = ViewModelProviders.of(this).get(CommunicationViewModel.class);
+        this.mViewModel.updateCurrentUserUID(getCurrentUser().getUid());
+        UserHelper.getUsersCollection().document(getCurrentUser().getUid()).addSnapshotListener( new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.e("MAIN_ACTIVITY", "Listen failed.", e);
+                    return;
+                }
+
+                if (documentSnapshot != null && documentSnapshot.exists()) {
+                    Log.e("MAIN_ACTIVITY", "Current data: " + documentSnapshot.getData());
+                    mViewModel.updateCurrentUserZoom(Integer.parseInt(documentSnapshot.getData().get("defaultZoom").toString()));
+                    mViewModel.updateCurrentUserRadius(Integer.parseInt(documentSnapshot.getData().get("searchRadius").toString()));
+                } else {
+                    Log.e("MAIN_ACTIVITY", "Current data: null");
+                }
+            }
+        });
+    }
+
+    // --------------------
+    // UI
+    // --------------------
+
+    // 1 - Update UI when activity is creating
+    private void updateUIWhenCreating(){
+
+        if (this.getCurrentUser() != null){
+            View headerContainer = mNavigationView.getHeaderView(0); // This returns the container layout in nav_drawer_header.xml (e.g., your RelativeLayout or LinearLayout)
+            ImageView mImageView = headerContainer.findViewById(R.id.nav_header_profile_img);
+            TextView mNameText = headerContainer.findViewById(R.id.nav_header_username);
+            TextView mEmailText = headerContainer.findViewById(R.id.nav_header_user_email);
+
+
+            //Get picture URL from Firebase
+            if (this.getCurrentUser().getPhotoUrl() != null) {
+                Glide.with(this)
+                        .load(this.getCurrentUser().getPhotoUrl())
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(mImageView);
+            }
+
+            //Get email from Firebase
+            String email = TextUtils.isEmpty(this.getCurrentUser().getEmail()) ? getString(R.string.info_no_email_found) : this.getCurrentUser().getEmail();
+            String name = TextUtils.isEmpty(this.getCurrentUser().getDisplayName()) ? getString(R.string.info_no_username_found) : this.getCurrentUser().getDisplayName();
+
+            //Update views with data
+            mEmailText.setText(email);
+            mNameText.setText(name);
+        }
+    }
+
+    // Create OnCompleteListener called after tasks ended
+    private OnSuccessListener<Void> updateUIAfterRESTRequestsCompleted(final int origin){
+        return aVoid -> {
+            switch (origin){
+                case SIGN_OUT_TASK:
+                    finish();
+                    showActivity(ACTIVITY_LOGIN);
+                    break;
+                default:
+                    break;
+            }
+        };
+    }
+
+    // --------------------
+    // REST REQUEST
+    // --------------------
 
     private void signOutUserFromFirebase(){
         AuthUI.getInstance()
-                .signOut( this )
-                .addOnSuccessListener( this, this.updateUIAfterRESTRequestsCompleted(SIGN_OUT_TASK) );
+                .signOut(this)
+                .addOnSuccessListener(this, this.updateUIAfterRESTRequestsCompleted(SIGN_OUT_TASK));
     }
 
-
-    // ------------------
-    // ERROR HANDLER
-    // ------------------
-
-    protected OnFailureListener onFailureListener(){
-        return new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), getString( R.string.error_unknown_error ), Toast.LENGTH_LONG).show();
-            }
-        };
-    }
-
-    private OnSuccessListener<Void> updateUIAfterRESTRequestsCompleted(final int origin){
-        return new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                switch (origin){
-                    case SIGN_OUT_TASK:
-                        finish();
-                        startLoginActivity();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
-    }
-
-    // --------
+    // ----------
     // UI
-    // --------
+    // ----------
 
     private Boolean updateMainFragment( Integer integer){
         switch (integer){
@@ -285,7 +347,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-
-
-
 }
+

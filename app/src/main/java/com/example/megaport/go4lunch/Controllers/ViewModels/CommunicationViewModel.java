@@ -4,12 +4,14 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.Objects;
+
 public class CommunicationViewModel extends ViewModel {
 
     public final MutableLiveData<LatLng> currentUserPosition = new MutableLiveData<>();
-    public final MutableLiveData<String> currentUserUID = new MutableLiveData<>();
-    public final MutableLiveData<Integer> currentUserZoom = new MutableLiveData<>();
-    public final MutableLiveData<Integer> currentUserRadius = new MutableLiveData<>();
+    private final MutableLiveData<String> currentUserUID = new MutableLiveData<>();
+    private final MutableLiveData<Integer> currentUserZoom = new MutableLiveData<>();
+    private final MutableLiveData<Integer> currentUserRadius = new MutableLiveData<>();
 
     public void updateCurrentUserPosition(LatLng latLng){
         currentUserPosition.setValue(latLng);
@@ -32,7 +34,7 @@ public class CommunicationViewModel extends ViewModel {
     public Integer getCurrentUserRadius(){return currentUserRadius.getValue();}
 
     public String getCurrentUserPositionFormatted(){
-        String location = currentUserPosition.getValue().toString().replace("lat/lng: (", "");
+        String location = Objects.requireNonNull( currentUserPosition.getValue() ).toString().replace("lat/lng: (", "");
         return location.replace(")", "");
     }
 

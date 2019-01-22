@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class LunchStreams {
 
-    private static LunchService mapPlacesInfo = LunchService.retrofit.create(LunchService.class);
+    private static final LunchService mapPlacesInfo = LunchService.retrofit.create(LunchService.class);
 
     // MAP
 
@@ -33,6 +33,15 @@ public class LunchStreams {
                 .toObservable()
                 .subscribeOn( Schedulers.io())
                 .observeOn( AndroidSchedulers.mainThread())
+                .timeout(10, TimeUnit.SECONDS);
+    }
+
+    // DETAILS
+
+    public static Observable<PlaceDetailsInfo> streamSimpleFetchPlaceInfo(String placeId, String key){
+        return  mapPlacesInfo.getPlacesInfo(placeId, key)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .timeout(10, TimeUnit.SECONDS);
     }
 }

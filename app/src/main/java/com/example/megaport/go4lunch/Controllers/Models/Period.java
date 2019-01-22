@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class Period {
     @Expose
-    public Close close;
+    private Close close;
     @SerializedName("open")
     @Expose
-    public Open open;
+    private Open open;
 
     public Close getClose() {
         return close;

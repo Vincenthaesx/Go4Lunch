@@ -1,11 +1,10 @@
 package com.example.megaport.go4lunch.Controllers.fragment;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,23 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.megaport.go4lunch.Controllers.DetailActivity;
 import com.example.megaport.go4lunch.Controllers.Models.PlaceDetails;
+import com.example.megaport.go4lunch.Controllers.Utils.ItemClickSupport;
 import com.example.megaport.go4lunch.Controllers.Utils.LunchStreams;
 import com.example.megaport.go4lunch.Controllers.View.ListAdapter;
 import com.example.megaport.go4lunch.Controllers.ViewModels.CommunicationViewModel;
 import com.example.megaport.go4lunch.R;
-import com.google.android.gms.maps.MapFragment;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
-
-import static android.support.v4.content.ContextCompat.getDrawable;
 
 public class listViewFragment extends BaseFragment {
 
@@ -49,7 +45,7 @@ public class listViewFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        mViewModel = ViewModelProviders.of(getActivity()).get(CommunicationViewModel.class);
+        mViewModel = ViewModelProviders.of( Objects.requireNonNull( getActivity() ) ).get(CommunicationViewModel.class);
     }
 
     @Override
@@ -64,6 +60,7 @@ public class listViewFragment extends BaseFragment {
             configureRecyclerView();
         } );
 
+        this.configureOnClickRecyclerView();
         this.configureOnSwipeRefresh();
 
         return view;
@@ -97,6 +94,18 @@ public class listViewFragment extends BaseFragment {
         mSwipeRefreshLayout.setOnRefreshListener(this::executeHttpRequestWithRetrofit);
     }
 
+    // Configure item click on RecyclerView
+    private void configureOnClickRecyclerView(){
+        ItemClickSupport.addTo(mRecyclerView, R.layout.list_view_fragment_item)
+                .setOnItemClickListener((recyclerView, position, v) -> {
+
+                    PlaceDetails result = adapter.getRestaurant(position);
+                    Intent intent = new Intent(getActivity(), DetailActivity.class);
+                    intent.putExtra("PlaceDetailResult", result.getPlaceId());
+                    startActivity(intent);
+                });
+    }
+
     // ----------
     // ACTION
     // ----------
@@ -121,7 +130,7 @@ public class listViewFragment extends BaseFragment {
             }
             @Override
             public void onError(Throwable e) {
-                getActivity().runOnUiThread(() -> mSwipeRefreshLayout.setRefreshing(false));
+                Objects.requireNonNull( getActivity() ).runOnUiThread(() -> mSwipeRefreshLayout.setRefreshing(false));
                 handleError(e);}
             @Override
             public void onComplete() { }

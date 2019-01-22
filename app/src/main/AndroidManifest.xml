@@ -47,6 +47,7 @@
         <activity android:name=".Controllers.fragment.listViewFragment"></activity>
         <activity android:name=".Controllers.fragment.workmatesFragment"></activity>
         <activity android:name=".Controllers.DetailActivity"></activity>
+        <activity android:name=".Controllers.WebViewActivity"></activity>
     </application>
 
 </manifest>

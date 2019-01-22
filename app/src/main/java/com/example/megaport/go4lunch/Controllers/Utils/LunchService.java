@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface LunchService {
+interface LunchService {
 
     // MAP INFO
 
@@ -20,7 +20,6 @@ public interface LunchService {
     Observable<MapPlacesInfo> getNearbyPlaces(@Query("location") String location, @Query("radius") int radius, @Query("type") String type, @Query("key") String key);
 
     // PLACE INFO
-
 
     @GET("details/json")
     Observable<PlaceDetailsInfo> getPlacesInfo(@Query("placeid") String placeId, @Query("key") String key);

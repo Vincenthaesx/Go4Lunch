@@ -6,10 +6,10 @@ import com.google.gson.annotations.SerializedName;
 public class Viewport {
     @SerializedName("northeast")
     @Expose
-    public Northeast northeast;
+    private Northeast northeast;
     @SerializedName("southwest")
     @Expose
-    public Southwest southwest;
+    private Southwest southwest;
 
     public Northeast getNortheast() {
         return northeast;

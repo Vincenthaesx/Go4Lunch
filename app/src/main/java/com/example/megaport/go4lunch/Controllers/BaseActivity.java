@@ -1,12 +1,10 @@
 package com.example.megaport.go4lunch.Controllers;
 
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.example.megaport.go4lunch.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.FirebaseApp;
@@ -31,11 +29,11 @@ public class BaseActivity extends AppCompatActivity {
     // --------------------
 
     @Nullable
-    protected FirebaseUser getCurrentUser(){ return FirebaseAuth.getInstance().getCurrentUser(); }
+    FirebaseUser getCurrentUser(){ return FirebaseAuth.getInstance().getCurrentUser(); }
 
-    protected Boolean isCurrentUserLogged(){ return (this.getCurrentUser() != null); }
+    Boolean isCurrentUserLogged(){ return (this.getCurrentUser() != null); }
 
-    protected String getTodayDate(){
+    String getTodayDate(){
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         return df.format(c.getTime());
@@ -45,16 +43,11 @@ public class BaseActivity extends AppCompatActivity {
     // ERROR HANDLER
     // --------------------
 
-    protected OnFailureListener onFailureListener(){
-        return new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), getString( R.string.error_unknown_error), Toast.LENGTH_LONG).show();
-            }
-        };
+    OnFailureListener onFailureListener(){
+        return e -> Toast.makeText(getApplicationContext(), getString( R.string.error_unknown_error), Toast.LENGTH_LONG).show();
     }
 
-    protected void handleError(Throwable throwable) {
+    void handleError(Throwable throwable) {
         if (throwable instanceof HttpException) {
             HttpException httpException = (HttpException) throwable;
             int statusCode = httpException.code();

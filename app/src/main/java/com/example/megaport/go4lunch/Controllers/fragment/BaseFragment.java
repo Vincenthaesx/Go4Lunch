@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Objects;
 import retrofit2.HttpException;
 
 public class BaseFragment extends Fragment {
@@ -33,14 +34,14 @@ public class BaseFragment extends Fragment {
     // -----------------
 
 
-    protected String getTodayDate(){
+    String getTodayDate(){
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         return df.format(c.getTime());
     }
 
-    protected void handleError(Throwable throwable) {
-        getActivity().runOnUiThread(() -> {
+    void handleError(Throwable throwable) {
+        Objects.requireNonNull( getActivity() ).runOnUiThread(() -> {
             if (throwable instanceof HttpException) {
                 HttpException httpException = (HttpException) throwable;
                 int statusCode = httpException.code();

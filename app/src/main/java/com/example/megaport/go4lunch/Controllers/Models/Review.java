@@ -4,31 +4,31 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class Review {
+class Review {
     @SerializedName("author_name")
     @Expose
-    public String authorName;
+    private String authorName;
     @SerializedName("author_url")
     @Expose
-    public String authorUrl;
+    private String authorUrl;
     @SerializedName("language")
     @Expose
-    public String language;
+    private String language;
     @SerializedName("profile_photo_url")
     @Expose
-    public String profilePhotoUrl;
+    private String profilePhotoUrl;
     @SerializedName("rating")
     @Expose
-    public Integer rating;
+    private Integer rating;
     @SerializedName("relative_time_description")
     @Expose
-    public String relativeTimeDescription;
+    private String relativeTimeDescription;
     @SerializedName("text")
     @Expose
-    public String text;
+    private String text;
     @SerializedName("time")
     @Expose
-    public Integer time;
+    private Integer time;
 
     public String getAuthorName() {
         return authorName;

@@ -8,13 +8,13 @@ import java.util.List;
 public class AddressComponent {
     @SerializedName("long_name")
     @Expose
-    public String longName;
+    private String longName;
     @SerializedName("short_name")
     @Expose
-    public String shortName;
+    private String shortName;
     @SerializedName("types")
     @Expose
-    public List<String> types = null;
+    private List<String> types = null;
 
     public String getLongName() {
         return longName;

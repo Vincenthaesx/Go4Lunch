@@ -9,7 +9,6 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,11 +18,11 @@ public class RestaurantsHelper {
 
     // --- COLLECTION REFERENCE ---
 
-    public static CollectionReference getBookingCollection(){
+    private static CollectionReference getBookingCollection(){
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
     }
 
-    public static CollectionReference getLikedCollection(){
+    private static CollectionReference getLikedCollection(){
         return FirebaseFirestore.getInstance().collection(COLLECTION_LIKED_NAME);
     }
 
@@ -50,7 +49,7 @@ public class RestaurantsHelper {
         return RestaurantsHelper.getBookingCollection().whereEqualTo("restaurantId", restaurantId).whereEqualTo("bookingDate", bookingDate).get();
     }
 
-    public static Task<DocumentSnapshot> getLikeForThisRestaurant(String restaurantId){
+    private static Task<DocumentSnapshot> getLikeForThisRestaurant(String restaurantId){
         return RestaurantsHelper.getLikedCollection().document(restaurantId).get();
     }
 
@@ -59,11 +58,11 @@ public class RestaurantsHelper {
     }
 
     // --- DELETE ---
-    public static Task<Void> deleteBooking(String bookingId){
-        return RestaurantsHelper.getBookingCollection().document(bookingId).delete();
+    public static void deleteBooking(String bookingId){
+        RestaurantsHelper.getBookingCollection().document( bookingId ).delete();
     }
 
-    public static Boolean deleteLike(String restaurantId, String userId){
+    public static void deleteLike(String restaurantId, String userId){
         RestaurantsHelper.getLikeForThisRestaurant(restaurantId).addOnCompleteListener(restaurantTask -> {
             if (restaurantTask.isSuccessful()){
                 Map<String,Object> update = new HashMap<>();
@@ -71,6 +70,5 @@ public class RestaurantsHelper {
                 RestaurantsHelper.getLikedCollection().document(restaurantId).update(update);
             }
         });
-        return true;
     }
 }

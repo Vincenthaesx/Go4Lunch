@@ -7,10 +7,10 @@ import com.google.gson.annotations.SerializedName;
 public class Close {
     @SerializedName("day")
     @Expose
-    public Integer day;
+    private Integer day;
     @SerializedName("time")
     @Expose
-    public String time;
+    private String time;
 
     public Integer getDay() {
         return day;

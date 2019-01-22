@@ -1,6 +1,7 @@
 package com.example.megaport.go4lunch.Controllers.View;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,8 @@ import java.util.List;
 public class ListAdapter extends RecyclerView.Adapter<ListViewHolder> {
 
     // FOR DATA
-    private List<PlaceDetails> mResults;
-    private String mLocation;
+    private final List<PlaceDetails> mResults;
+    private final String mLocation;
 
     // CONSTRUCTOR
     public ListAdapter(List<PlaceDetails> result, String location) {
@@ -23,8 +24,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListViewHolder> {
         this.mLocation = location;
     }
 
+    @NonNull
     @Override
-    public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate( R.layout.list_view_fragment_item, parent,false);
@@ -32,7 +34,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ListViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull ListViewHolder viewHolder, int position) {
         viewHolder.updateWithData(this.mResults.get(position), this.mLocation);
     }
 

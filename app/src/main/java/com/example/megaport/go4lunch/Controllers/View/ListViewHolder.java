@@ -11,17 +11,19 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.megaport.go4lunch.Controllers.Api.RestaurantsHelper;
 import com.example.megaport.go4lunch.Controllers.Models.Location;
 import com.example.megaport.go4lunch.Controllers.Models.PlaceDetails;
 import com.example.megaport.go4lunch.R;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.maps.MapFragment;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -36,30 +38,28 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.item_textview_opening) TextView mOpeningText;
     @BindView(R.id.item_ratingBar) RatingBar mRatingBar;
 
-    GoogleApiClient mGoogleApiClient;
-
     private static final String OPEN = "OPEN";
     private static final String CLOSED = "CLOSED";
     private static final String CLOSING_SOON = "CLOSING_SOON";
     private static final String OPENING_HOURS_NOT_KNOW = "OPENING_HOURS_NOT_KNOW";
 
     public static final String BASE_URL = "https://maps.googleapis.com/maps/api/place/photo";
-    public static final int MAX_WIDTH = 75;
-    public static final int MAX_HEIGHT = 75;
+    private static final int MAX_WIDTH = 75;
+    private static final int MAX_HEIGHT = 75;
     public static final int MAX_HEIGHT_LARGE = 250;
 
     public static final double MAX_RATING = 5;
     public static final double MAX_STAR = 3;
 
 
-    private float[] distanceResults = new float[3];
+    private final float[] distanceResults = new float[3];
 
-    public ListViewHolder(View itemView) {
+    ListViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this,itemView);
     }
 
-    public void updateWithData(PlaceDetails results, String userLocation){
+    void updateWithData(PlaceDetails results, String userLocation){
         RequestManager glide = Glide.with(itemView);
 
         // Display Name
@@ -75,6 +75,23 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
 
         // Display Rating
         displayRating(results);
+
+        // Display Mates number & Icon
+        RestaurantsHelper.getTodayBooking(results.getPlaceId(),getTodayDate()).addOnCompleteListener( restaurantTask -> {
+            if (restaurantTask.isSuccessful()){
+                if (Objects.requireNonNull( restaurantTask.getResult() ).size() > 0) {
+                    for (QueryDocumentSnapshot document : restaurantTask.getResult()) {
+                        Log.e("TAG", document.getId() + " => " + document.getData());
+                    }
+                    this.mMatesText.setText(itemView.getResources().getString(R.string.restaurant_mates_number,restaurantTask.getResult().size()));
+                    this.mMatesPicture.setImageResource(R.drawable.baseline_person_outline_black_36);
+                    this.mMatesPicture.setVisibility(View.VISIBLE);
+                }else{
+                    this.mMatesText.setText("");
+                    this.mMatesPicture.setVisibility(View.GONE);
+                }
+            }
+        });
 
 
         // Display Opening Hours

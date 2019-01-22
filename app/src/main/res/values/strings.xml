@@ -60,5 +60,26 @@
     <string name="toolbar_search_title">Search restaurants</string>
     <string name="toolbar_search_hint">Search</string>
 
+    <!-- RESTAURANT DETAIL ACTIVITY-->
+    <string name="restaurant_item_call">CALL</string>
+    <string name="restaurant_item_like">LIKE</string>
+    <string name="restaurant_item_dislike">UNLIKE</string>
+    <string name="restaurant_item_website">WEBSITE</string>
+
+    <string name="restaurant_error_retrieving_info">Unable to retrieve some user information</string>
+
+    <string name="restaurant_new_booking">You have booked a new restaurant for today!</string>
+    <string name="restaurant_change_booking">You have change your booked restaurant for today!</string>
+    <string name="restaurant_cancel_booking">You canceled your reservation for this restaurant!</string>
+
+    <string name="restaurant_like_ok">You liked this restaurant!</string>
+    <string name="restaurant_like_ko">Error, please try again later</string>
+    <string name="restaurant_dislike_ok">You dislike this restaurant!</string>
+
+    <string name="restaurant_detail_no_website">No website available</string>
+    <string name="restaurant_detail_no_phone">No phone number available</string>
+
+    <string name="restaurant_detail_recyclerview">%1$s is joining!</string>
+
 
 </resources>

@@ -13,6 +13,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import java.util.Arrays;
+import java.util.Objects;
 
 import static com.example.megaport.go4lunch.Controllers.MainActivity.DEFAULT_NOTIFICATION;
 import static com.example.megaport.go4lunch.Controllers.MainActivity.DEFAULT_SEARCH_RADIUS;
@@ -35,7 +36,7 @@ public class LoginActivity extends BaseActivity {
         if (!this.isCurrentUserLogged()){
             this.startSignInActivity();
         }else {
-            this.mViewModel.updateCurrentUserUID(getCurrentUser().getUid());
+            this.mViewModel.updateCurrentUserUID( Objects.requireNonNull( getCurrentUser() ).getUid());
             launchMainActivity();
         }
     }
@@ -99,7 +100,7 @@ public class LoginActivity extends BaseActivity {
                 if (response == null) {
                     Toast.makeText(this, getString(R.string.error_authentication_canceled), Toast.LENGTH_SHORT).show();
                     startSignInActivity();
-                } else if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
+                } else if (Objects.requireNonNull( response.getError() ).getErrorCode() == ErrorCodes.NO_NETWORK) {
                     Toast.makeText(this, getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
                 } else if (response.getError().getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
                     Toast.makeText(this, getString(R.string.error_unknown_error), Toast.LENGTH_SHORT).show();

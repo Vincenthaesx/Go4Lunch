@@ -2,10 +2,9 @@ package com.example.megaport.go4lunch.Controllers;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -30,12 +29,10 @@ import com.example.megaport.go4lunch.Controllers.fragment.workmatesFragment;
 import com.example.megaport.go4lunch.R;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -49,7 +46,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     //FOR DATA
     private static final int SIGN_OUT_TASK = 10;
 
-    public static final int TITLE_HUNGRY = R.string.hungry;
+    private static final int TITLE_HUNGRY = R.string.hungry;
 
     // FOR FRAGMENTS
     private listViewFragment fragmentListView;
@@ -57,17 +54,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private workmatesFragment fragmentWorkmates;
 
     //Identity each activity with a number
-    public static final int ACTIVITY_SETTINGS = 0;
-    public static final int ACTIVITY_CHAT = 1 ;
-    public static final int ACTIVITY_PLACE_DETAIL = 2 ;
-    public static final int ACTIVITY_LOGIN = 3 ;
+    private static final int ACTIVITY_SETTINGS = 0;
+    private static final int ACTIVITY_PLACE_DETAIL = 2 ;
+    private static final int ACTIVITY_LOGIN = 3 ;
 
     //Default data to create user
-    public static final int DEFAULT_ZOOM = 13;
+    public static final int DEFAULT_ZOOM = 15;
     public static final int DEFAULT_SEARCH_RADIUS = 1000;
     public static final boolean DEFAULT_NOTIFICATION = false;
 
-    protected CommunicationViewModel mViewModel;
+    private CommunicationViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,12 +124,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (activityIdentifier){
             case ACTIVITY_SETTINGS:
                 break;
-            case ACTIVITY_CHAT:
-                break;
             case ACTIVITY_PLACE_DETAIL:
-                RestaurantsHelper.getBooking(getCurrentUser().getUid(),getTodayDate()).addOnCompleteListener( bookingTask -> {
+                RestaurantsHelper.getBooking( Objects.requireNonNull( getCurrentUser() ).getUid(),getTodayDate()).addOnCompleteListener( bookingTask -> {
                     if (bookingTask.isSuccessful()){
-                        if (bookingTask.getResult().isEmpty()){
+                        if (Objects.requireNonNull( bookingTask.getResult() ).isEmpty()){
                             Toast.makeText(this, getResources().getString(R.string.drawer_no_restaurant_booked), Toast.LENGTH_SHORT).show();
                         }else{
                             Map<String,Object> extra = new HashMap<>();
@@ -169,7 +163,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     // ---------------------
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         // Handle Navigation Item Click
         int id = item.getItemId();
@@ -222,7 +216,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     // Configure Toolbar
     private void configureToolBar(){
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(TITLE_HUNGRY);
+        Objects.requireNonNull( getSupportActionBar() ).setTitle(TITLE_HUNGRY);
     }
 
     @Override
@@ -250,24 +244,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void retrieveCurrentUser(){
         mViewModel = ViewModelProviders.of(this).get(CommunicationViewModel.class);
-        this.mViewModel.updateCurrentUserUID(getCurrentUser().getUid());
-        UserHelper.getUsersCollection().document(getCurrentUser().getUid()).addSnapshotListener( new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.e("MAIN_ACTIVITY", "Listen failed.", e);
-                    return;
-                }
-
-                if (documentSnapshot != null && documentSnapshot.exists()) {
-                    Log.e("MAIN_ACTIVITY", "Current data: " + documentSnapshot.getData());
-                    mViewModel.updateCurrentUserZoom(Integer.parseInt(documentSnapshot.getData().get("defaultZoom").toString()));
-                    mViewModel.updateCurrentUserRadius(Integer.parseInt(documentSnapshot.getData().get("searchRadius").toString()));
-                } else {
-                    Log.e("MAIN_ACTIVITY", "Current data: null");
-                }
+        this.mViewModel.updateCurrentUserUID( Objects.requireNonNull( getCurrentUser() ).getUid());
+        UserHelper.getUsersCollection().document(getCurrentUser().getUid()).addSnapshotListener( (documentSnapshot, e) -> {
+            if (e != null) {
+                Log.e("MAIN_ACTIVITY", "Listen failed.", e);
+                return;
             }
-        });
+
+            if (documentSnapshot != null && documentSnapshot.exists()) {
+                Log.e("MAIN_ACTIVITY", "Current data: " + documentSnapshot.getData());
+                mViewModel.updateCurrentUserZoom(Integer.parseInt( Objects.requireNonNull( documentSnapshot.getData() ).get("defaultZoom").toString()));
+                mViewModel.updateCurrentUserRadius(Integer.parseInt(documentSnapshot.getData().get("searchRadius").toString()));
+            } else {
+                Log.e("MAIN_ACTIVITY", "Current data: null");
+            }
+        } );
     }
 
     // --------------------
@@ -303,9 +294,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     // Create OnCompleteListener called after tasks ended
-    private OnSuccessListener<Void> updateUIAfterRESTRequestsCompleted(final int origin){
+    private OnSuccessListener<Void> updateUIAfterRESTRequestsCompleted(){
         return aVoid -> {
-            switch (origin){
+            switch (MainActivity.SIGN_OUT_TASK){
                 case SIGN_OUT_TASK:
                     finish();
                     showActivity(ACTIVITY_LOGIN);
@@ -323,7 +314,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void signOutUserFromFirebase(){
         AuthUI.getInstance()
                 .signOut(this)
-                .addOnSuccessListener(this, this.updateUIAfterRESTRequestsCompleted(SIGN_OUT_TASK));
+                .addOnSuccessListener(this, this.updateUIAfterRESTRequestsCompleted());
     }
 
     // ----------

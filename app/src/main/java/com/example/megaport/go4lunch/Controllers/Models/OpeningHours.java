@@ -7,12 +7,12 @@ import java.util.List;
 public class OpeningHours {
     @SerializedName("open_now")
     @Expose
-    public Boolean openNow;
+    private Boolean openNow;
     @Expose
-    public List<Period> periods = null;
+    private List<Period> periods = null;
     @SerializedName("weekday_text")
     @Expose
-    public List<String> weekdayText = null;
+    private List<String> weekdayText = null;
 
     public Boolean getOpenNow() {
         return openNow;

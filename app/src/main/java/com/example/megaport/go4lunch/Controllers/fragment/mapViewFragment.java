@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.example.megaport.go4lunch.BuildConfig;
 import com.example.megaport.go4lunch.Controllers.Api.RestaurantsHelper;
 import com.example.megaport.go4lunch.Controllers.DetailActivity;
@@ -36,13 +35,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.ArrayList;
+import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
@@ -75,7 +73,7 @@ public class mapViewFragment extends BaseFragment implements GoogleApiClient.OnC
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = ViewModelProviders.of(getActivity()).get(CommunicationViewModel.class);
+        mViewModel = ViewModelProviders.of( Objects.requireNonNull( getActivity() ) ).get(CommunicationViewModel.class);
     }
 
     @Override
@@ -84,9 +82,7 @@ public class mapViewFragment extends BaseFragment implements GoogleApiClient.OnC
         ButterKnife.bind(this, rootView);
 
         setHasOptionsMenu(true);
-        mViewModel.currentUserPosition.observe(this, latLng -> {
-            executeHttpRequestWithRetrofit();
-        });
+        mViewModel.currentUserPosition.observe(this, latLng -> executeHttpRequestWithRetrofit() );
 
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
@@ -112,7 +108,7 @@ public class mapViewFragment extends BaseFragment implements GoogleApiClient.OnC
         mMapView.onPause();
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             stopLocationUpdates();
-            mGoogleApiClient.stopAutoManage(getActivity());
+            mGoogleApiClient.stopAutoManage( Objects.requireNonNull( getActivity() ) );
             mGoogleApiClient.disconnect();
         }
     }
@@ -140,22 +136,19 @@ public class mapViewFragment extends BaseFragment implements GoogleApiClient.OnC
     @SuppressLint("MissingPermission")
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        if (EasyPermissions.hasPermissions(getContext(), perms)) {
+        if (EasyPermissions.hasPermissions( Objects.requireNonNull( getContext() ), perms)) {
             mFusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            // Got last known location. In some rare situations this can be null.
-                            if (location != null) {
-                                handleNewLocation(location);
-                            } else {
-                                if (EasyPermissions.hasPermissions(getContext(), perms)) {
-                                    mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null);
-                                }
-
+                    .addOnSuccessListener( Objects.requireNonNull( getActivity() ), location -> {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            handleNewLocation(location);
+                        } else {
+                            if (EasyPermissions.hasPermissions(getContext(), perms)) {
+                                mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null);
                             }
+
                         }
-                    });
+                    } );
         } else {
             // Do not have permissions, request them now
             EasyPermissions.requestPermissions(this, getString(R.string.popup_title_perm_access),
@@ -207,7 +200,7 @@ public class mapViewFragment extends BaseFragment implements GoogleApiClient.OnC
                             MarkerOptions markerOptions = new MarkerOptions();
                             markerOptions.position(new LatLng(lat, lng));
                             markerOptions.title(title);
-                            if (restaurantTask.getResult().isEmpty()) { // If there is no booking for today
+                            if (Objects.requireNonNull( restaurantTask.getResult() ).isEmpty()) { // If there is no booking for today
                                 markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.baseline_place_unbook_24));
                             } else { // If there is booking for today
                                 markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.baseline_place_booked_24));
@@ -234,7 +227,7 @@ public class mapViewFragment extends BaseFragment implements GoogleApiClient.OnC
                             MarkerOptions markerOptions = new MarkerOptions();
                             markerOptions.position(new LatLng(lat, lng));
                             markerOptions.title(title);
-                            if (restaurantTask.getResult().isEmpty()) { // If there is no booking for today
+                            if (Objects.requireNonNull( restaurantTask.getResult() ).isEmpty()) { // If there is no booking for today
                                 markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.baseline_place_unbook_24));
                             } else { // If there is booking for today
                                 markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.baseline_place_booked_24));
@@ -283,33 +276,30 @@ public class mapViewFragment extends BaseFragment implements GoogleApiClient.OnC
 
     private void configureMapView() {
         try {
-            MapsInitializer.initialize(getActivity().getBaseContext());
+            MapsInitializer.initialize( Objects.requireNonNull( getActivity() ).getBaseContext());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        mMapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap mMap) {
-                googleMap = mMap;
-                if (checkLocationPermission()) {
-                    //Request location updates:
-                    googleMap.setMyLocationEnabled(true);
-                }
-                googleMap.getUiSettings().setCompassEnabled(true);
-                googleMap.getUiSettings().setMyLocationButtonEnabled(true);
-                View locationButton = ((View) mMapView.findViewById(Integer.parseInt("1")).
-                        getParent()).findViewById(Integer.parseInt("2"));
-
-                // and next place it, for example, on bottom right (as Google Maps app)
-                RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
-                // position on right bottom
-                rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
-                rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
-                rlp.setMargins(0, 0, 30, 30);
-                googleMap.getUiSettings().setRotateGesturesEnabled(true);
-                googleMap.setOnMarkerClickListener(mapViewFragment.this::onClickMarker);
+        mMapView.getMapAsync( mMap -> {
+            googleMap = mMap;
+            if (checkLocationPermission()) {
+                //Request location updates:
+                googleMap.setMyLocationEnabled(true);
             }
-        });
+            googleMap.getUiSettings().setCompassEnabled(true);
+            googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+            View locationButton = ((View) mMapView.findViewById(Integer.parseInt("1")).
+                    getParent()).findViewById(Integer.parseInt("2"));
+
+            // and next place it, for example, on bottom right (as Google Maps app)
+            RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
+            // position on right bottom
+            rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
+            rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+            rlp.setMargins(0, 0, 30, 30);
+            googleMap.getUiSettings().setRotateGesturesEnabled(true);
+            googleMap.setOnMarkerClickListener(mapViewFragment.this::onClickMarker);
+        } );
     }
 
     private void configureLocationCallBack() {
@@ -330,14 +320,8 @@ public class mapViewFragment extends BaseFragment implements GoogleApiClient.OnC
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
     }
 
-    private void startLocationUpdates() {
-        if (checkLocationPermission()){
-            mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null);
-        }
-    }
-
     private void configureLocationRequest(){
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient( Objects.requireNonNull( getActivity() ) );
         // Create the LocationRequest object
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -347,24 +331,20 @@ public class mapViewFragment extends BaseFragment implements GoogleApiClient.OnC
 
     private void configureGoogleApiClient(){
         mGoogleApiClient = new GoogleApiClient
-                .Builder(getContext())
+                .Builder( Objects.requireNonNull( getContext() ) )
                 .addConnectionCallbacks(this)
                 .addApi(LocationServices.API)
-                .enableAutoManage(getActivity(), this)
+                .enableAutoManage( Objects.requireNonNull( getActivity() ), this)
                 .build();
     }
 
-    public boolean checkLocationPermission() {
-        if (EasyPermissions.hasPermissions(getContext(), perms)) {
-            return true;
-        } else {
-            return false;
-        }
+    private boolean checkLocationPermission() {
+        return EasyPermissions.hasPermissions( Objects.requireNonNull( getContext() ), perms );
     }
 
     @SuppressLint("MissingPermission")
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         // Forward results to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);

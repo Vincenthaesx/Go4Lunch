@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
-    tools:context=".Controllers.MainActivity">
+    tools:context=".main.Controllers.activities.MainActivity">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/main_container"

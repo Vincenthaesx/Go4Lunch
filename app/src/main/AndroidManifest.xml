@@ -32,22 +32,22 @@
             />
 
 
-        <activity android:name=".Controllers.LoginActivity">
+        <activity android:name=".main.Controllers.activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controllers.MainActivity"
+        <activity android:name=".main.Controllers.activities.MainActivity"
             android:label="I'm Hungry !">
 
         </activity>
-        <activity android:name=".Controllers.fragment.mapViewFragment"></activity>
-        <activity android:name=".Controllers.fragment.listViewFragment"></activity>
-        <activity android:name=".Controllers.fragment.workmatesFragment"></activity>
-        <activity android:name=".Controllers.DetailActivity"></activity>
-        <activity android:name=".Controllers.WebViewActivity"></activity>
+        <activity android:name=".main.Controllers.fragment.mapViewFragment"></activity>
+        <activity android:name=".main.Controllers.fragment.listViewFragment"></activity>
+        <activity android:name=".main.Controllers.fragment.workmatesFragment"></activity>
+        <activity android:name=".main.Controllers.activities.DetailActivity"></activity>
+        <activity android:name=".main.Controllers.activities.WebViewActivity"></activity>
     </application>
 
 </manifest>

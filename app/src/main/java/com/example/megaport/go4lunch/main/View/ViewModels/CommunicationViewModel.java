@@ -9,9 +9,9 @@ import java.util.Objects;
 public class CommunicationViewModel extends ViewModel {
 
     public final MutableLiveData<LatLng> currentUserPosition = new MutableLiveData<>();
-    private final MutableLiveData<String> currentUserUID = new MutableLiveData<>();
-    private final MutableLiveData<Integer> currentUserZoom = new MutableLiveData<>();
-    private final MutableLiveData<Integer> currentUserRadius = new MutableLiveData<>();
+    public final MutableLiveData<String> currentUserUID = new MutableLiveData<>();
+    public final MutableLiveData<Integer> currentUserZoom = new MutableLiveData<>();
+    public final MutableLiveData<Integer> currentUserRadius = new MutableLiveData<>();
 
     public void updateCurrentUserPosition(LatLng latLng){
         currentUserPosition.setValue(latLng);

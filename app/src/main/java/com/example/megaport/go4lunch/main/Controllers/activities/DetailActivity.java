@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.megaport.go4lunch.main.Api.RestaurantsHelper;
 import com.example.megaport.go4lunch.main.Api.UserHelper;
 import com.example.megaport.go4lunch.main.Models.PlaceDetails;
@@ -26,25 +25,20 @@ import com.example.megaport.go4lunch.main.Models.PlaceDetailsInfo;
 import com.example.megaport.go4lunch.main.Models.User;
 import com.example.megaport.go4lunch.main.Utils.LunchStreams;
 import com.example.megaport.go4lunch.main.View.DetailAdapter;
-
 import com.example.megaport.go4lunch.main.Controllers.fragment.mapViewFragment;
-
 import com.example.megaport.go4lunch.R;
 import com.glide.slider.library.Animations.DescriptionAnimation;
 import com.glide.slider.library.SliderLayout;
 import com.glide.slider.library.SliderTypes.DefaultSliderView;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
-
 import static com.example.megaport.go4lunch.main.View.ListViewHolder.BASE_URL;
 import static com.example.megaport.go4lunch.main.View.ListViewHolder.MAX_HEIGHT_LARGE;
 import static com.example.megaport.go4lunch.main.View.ListViewHolder.MAX_RATING;

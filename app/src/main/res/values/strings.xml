@@ -81,5 +81,9 @@
 
     <string name="restaurant_detail_recyclerview">%1$s is joining!</string>
 
+    <!-- WORKMATES LIST -->
+    <string name="mates_is_eating_at">%1$s is eating at %2$s</string>
+    <string name="mates_hasnt_decided">%1$s hasn\'t decided yet</string>
+
 
 </resources>

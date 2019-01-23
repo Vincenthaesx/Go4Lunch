@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.example.megaport.go4lunch.main.Api.UserHelper;
 import com.example.megaport.go4lunch.main.View.ViewModels.CommunicationViewModel;
 import com.example.megaport.go4lunch.R;
@@ -14,7 +13,6 @@ import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import java.util.Arrays;
 import java.util.Objects;
-
 import static com.example.megaport.go4lunch.main.Controllers.activities.MainActivity.DEFAULT_NOTIFICATION;
 import static com.example.megaport.go4lunch.main.Controllers.activities.MainActivity.DEFAULT_SEARCH_RADIUS;
 import static com.example.megaport.go4lunch.main.Controllers.activities.MainActivity.DEFAULT_ZOOM;
@@ -55,10 +53,10 @@ public class LoginActivity extends BaseActivity {
                         .setTheme(R.style.LoginTheme)
                         .setAvailableProviders(
                                 Arrays.asList(new AuthUI.IdpConfig.FacebookBuilder().build(),        // FACEBOOK
-                                        new AuthUI.IdpConfig.GoogleBuilder().build()))                // GOOGLE
+                                        new AuthUI.IdpConfig.GoogleBuilder().build()))               // GOOGLE
 
                         .setIsSmartLockEnabled(false, true)
-                        .setLogo(R.drawable.meal_v2_half_size)
+                        .setLogo(R.drawable.go4lunch)
                         .build(),
                 RC_SIGN_IN);
     }

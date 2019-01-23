@@ -23,7 +23,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.megaport.go4lunch.main.Api.RestaurantsHelper;
 import com.example.megaport.go4lunch.main.Api.UserHelper;
 import com.example.megaport.go4lunch.main.View.ViewModels.CommunicationViewModel;
-
 import com.example.megaport.go4lunch.main.Controllers.fragment.listViewFragment;
 import com.example.megaport.go4lunch.main.Controllers.fragment.mapViewFragment;
 import com.example.megaport.go4lunch.main.Controllers.fragment.workmatesFragment;
@@ -39,6 +38,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
 
+    // BIND
     @BindView(R.id.activity_main_drawer_layout) DrawerLayout mDrawerLayout;
     @BindView(R.id.bottom_navigation) BottomNavigationView mBottomNavigationView;
     @BindView(R.id.simple_toolbar) Toolbar toolbar;
@@ -46,7 +46,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     //FOR DATA
     private static final int SIGN_OUT_TASK = 10;
-
     private static final int TITLE_HUNGRY = R.string.hungry;
 
     // FOR FRAGMENTS
@@ -55,9 +54,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private workmatesFragment fragmentWorkmates;
 
     //Identity each activity with a number
-    private static final int ACTIVITY_SETTINGS = 0;
-    private static final int ACTIVITY_PLACE_DETAIL = 2 ;
-    private static final int ACTIVITY_LOGIN = 3 ;
+    private static final int ACTIVITY_SETTINGS = 5;
+    private static final int ACTIVITY_DETAIL = 6 ;
+    private static final int ACTIVITY_LOGIN = 7 ;
 
     //Default data to create user
     public static final int DEFAULT_ZOOM = 15;
@@ -125,7 +124,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (activityIdentifier){
             case ACTIVITY_SETTINGS:
                 break;
-            case ACTIVITY_PLACE_DETAIL:
+            case ACTIVITY_DETAIL:
                 RestaurantsHelper.getBooking( Objects.requireNonNull( getCurrentUser() ).getUid(),getTodayDate()).addOnCompleteListener( bookingTask -> {
                     if (bookingTask.isSuccessful()){
                         if (Objects.requireNonNull( bookingTask.getResult() ).isEmpty()){
@@ -171,7 +170,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         switch (id){
             case R.id.activity_main_drawer_dining :
-                showActivity(ACTIVITY_PLACE_DETAIL);
+                showActivity(ACTIVITY_DETAIL);
                 break;
             case R.id.activity_main_drawer_settings:
                 showActivity(ACTIVITY_SETTINGS);

@@ -1,5 +1,6 @@
 package com.example.megaport.go4lunch.main.Utils;
 
+import com.example.megaport.go4lunch.main.Models.AutoCompleteResult;
 import com.example.megaport.go4lunch.main.Models.MapPlacesInfo;
 import com.example.megaport.go4lunch.main.Models.PlaceDetails;
 import com.example.megaport.go4lunch.main.Models.PlaceDetailsInfo;
@@ -40,6 +41,20 @@ public class LunchStreams {
 
     public static Observable<PlaceDetailsInfo> streamSimpleFetchPlaceInfo(String placeId, String key){
         return  mapPlacesInfo.getPlacesInfo(placeId, key)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .timeout(10, TimeUnit.SECONDS);
+    }
+
+    // SEARCH
+
+    public static  Observable<List<PlaceDetails>> streamFetchAutoCompleteInfo(String query, String location, int radius, String apiKey){
+        return mapPlacesInfo.getPlaceAutoComplete(query, location, radius, apiKey)
+                .flatMapIterable( AutoCompleteResult::getPredictions)
+                .flatMap(info -> mapPlacesInfo.getPlacesInfo(info.getPlaceId(), apiKey))
+                .map(PlaceDetailsInfo::getResult)
+                .toList()
+                .toObservable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(10, TimeUnit.SECONDS);

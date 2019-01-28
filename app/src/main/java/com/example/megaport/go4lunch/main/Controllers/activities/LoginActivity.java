@@ -82,9 +82,9 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    // --------------------
+    // -------------
     // UTILS
-    // --------------------
+    // -------------
 
     private void handleResponseAfterSignIn(int requestCode, int resultCode, Intent data){
 
@@ -107,9 +107,9 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    // --------------------
+    // ---------------
     // ACTION
-    // --------------------
+    // ---------------
 
     private void launchMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);

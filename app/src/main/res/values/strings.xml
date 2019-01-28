@@ -7,8 +7,7 @@
 
     <!-- FACEBOOK PURPOSE -->
     <string name="facebook_application_id" translatable="false">240624886836233</string>
-    <string name="facebook_login_protocol_scheme" translatable="false"
-        tools:ignore="UnusedResources">fb240624886836233</string>
+    <string name="facebook_login_protocol_scheme" translatable="false" tools:ignore="UnusedResources">fb240624886836233</string>
 
     <!-- TOOLBAR -->
     <string name="hungry">I\'m Hungry!</string>
@@ -65,6 +64,9 @@
     <string name="restaurant_item_like">LIKE</string>
     <string name="restaurant_item_dislike">UNLIKE</string>
     <string name="restaurant_item_website">WEBSITE</string>
+    <string name="label_website">Website</string>
+    <string name="search_too_short">Your query must be 3 character length minimum</string>
+    <string name="search_no_result">No restaurant match your query</string>
 
     <string name="restaurant_error_retrieving_info">Unable to retrieve some user information</string>
 
@@ -80,10 +82,21 @@
     <string name="restaurant_detail_no_phone">No phone number available</string>
 
     <string name="restaurant_detail_recyclerview">%1$s is joining!</string>
+    <string name="label_settings">Settings</string>
 
     <!-- WORKMATES LIST -->
     <string name="mates_is_eating_at">%1$s is eating at %2$s</string>
     <string name="mates_hasnt_decided">%1$s hasn\'t decided yet</string>
+
+    <!-- SETTINGS ACTIVITY -->
+    <string name="settings_zoom_title">Default zoom on map</string>
+    <string name="settings_search_radius_title">Restaurants search radius</string>
+    <string name="settings_notification_title">Notifications</string>
+    <string name="settings_notification_text">Each day you will have a reminder for your restaurant\'s choice, if you have selected one</string>
+    <string name="settings_save_text">Save</string>
+    <string name="settings_save_ok">Settings saved!</string>
+    <string name="settings_save_error_zoom">Minimum is %1$s, Maximum is %2$s</string>
+    <string name="settings_save_error_radius">Minimum is %1$s, Maximum is %2$s</string>
 
 
 </resources>

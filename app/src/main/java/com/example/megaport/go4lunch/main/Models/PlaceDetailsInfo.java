@@ -5,9 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * Created by Adrien Deguffroy on 05/08/2018.
- */
 public class PlaceDetailsInfo {
     @SerializedName("html_attributions")
     @Expose

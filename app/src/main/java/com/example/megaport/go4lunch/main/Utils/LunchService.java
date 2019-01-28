@@ -1,5 +1,6 @@
 package com.example.megaport.go4lunch.main.Utils;
 
+import com.example.megaport.go4lunch.main.Models.AutoCompleteResult;
 import com.example.megaport.go4lunch.main.Models.MapPlacesInfo;
 import com.example.megaport.go4lunch.main.Models.PlaceDetailsInfo;
 
@@ -23,6 +24,11 @@ interface LunchService {
 
     @GET("details/json")
     Observable<PlaceDetailsInfo> getPlacesInfo(@Query("placeid") String placeId, @Query("key") String key);
+
+    // SEARCH
+
+    @GET("autocomplete/json?strictbounds&types=establishment")
+    Observable<AutoCompleteResult> getPlaceAutoComplete(@Query("input") String query, @Query("location") String location, @Query("radius") int radius, @Query("key") String apiKey );
 
 
 

@@ -5,8 +5,7 @@
 
     <uses-feature
         android:glEsVersion="0x00020000"
-        android:required="true"
-        />
+        android:required="true" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -22,15 +21,17 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
+        <activity
+            android:name=".main.Controllers.activities.SettingActivity"
+            android:label="@string/label_settings"
+            android:parentActivityName=".main.Controllers.activities.MainActivity" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyANWAnrLNi8gwnXrGajjLi3Fwh2mIICz_M" />
-
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"
-            />
-
+            android:value="@integer/google_play_services_version" />
 
         <activity android:name=".main.Controllers.activities.LoginActivity">
             <intent-filter>
@@ -39,15 +40,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.Controllers.activities.MainActivity"
-            android:label="I'm Hungry !">
-
-        </activity>
-        <activity android:name=".main.Controllers.fragment.mapViewFragment"></activity>
-        <activity android:name=".main.Controllers.fragment.listViewFragment"></activity>
-        <activity android:name=".main.Controllers.fragment.workmatesFragment"></activity>
-        <activity android:name=".main.Controllers.activities.DetailActivity"></activity>
-        <activity android:name=".main.Controllers.activities.WebViewActivity"></activity>
+        <activity
+            android:name=".main.Controllers.activities.MainActivity"
+            android:label="I&apos;m Hungry !"></activity>
+        <activity android:name=".main.Controllers.activities.DetailActivity" />
+        <activity
+            android:name=".main.Controllers.activities.WebViewActivity"
+            android:label="@string/label_website"
+            android:parentActivityName=".main.Controllers.activities.DetailActivity" />
     </application>
 
 </manifest>

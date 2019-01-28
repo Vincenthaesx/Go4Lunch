@@ -123,6 +123,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void showActivity(int activityIdentifier){
         switch (activityIdentifier){
             case ACTIVITY_SETTINGS:
+                launchActivity(SettingActivity.class,null);
                 break;
             case ACTIVITY_DETAIL:
                 RestaurantsHelper.getBooking( Objects.requireNonNull( getCurrentUser() ).getUid(),getTodayDate()).addOnCompleteListener( bookingTask -> {

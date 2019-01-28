@@ -48,9 +48,11 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
 
     @BindView(R.id.restaurant_name) TextView mRestaurantName;
     @BindView(R.id.restaurant_address)TextView mRestaurantAddress;
+
     @BindView(R.id.restaurant_recycler_view) RecyclerView mRestaurantRecyclerView;
     @BindView(R.id.slider) SliderLayout mDemoSlider;
     @BindView(R.id.floatingActionButton) FloatingActionButton mFloatingActionButton;
+
     @BindView(R.id.restaurant_item_call) Button mButtonCall;
     @BindView(R.id.restaurant_item_like) Button mButtonLike;
     @BindView(R.id.restaurant_item_website) Button mButtonWebsite;

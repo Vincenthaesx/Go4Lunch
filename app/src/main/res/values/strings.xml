@@ -27,6 +27,7 @@
     <string name="info_no_email_found">Auncune adresse email</string>
     <string name="info_no_username_found">Aucun nom d\'utilisateur</string>
     <string name="error_no_internet">No internet connection!</string>
+    <string name="bottom_menu_chat">Chat</string>
 
     <!-- Used in NavigationDrawer -->
     <string name="drawer_open">Open navigation drawer</string>
@@ -58,6 +59,11 @@
     <!-- TOOLBAR -->
     <string name="toolbar_search_title">Search restaurants</string>
     <string name="toolbar_search_hint">Search</string>
+
+    <!-- CHAT ACTIVITY -->
+    <string name="chat_input_text_hint">Compose your message</string>
+    <string name="chat_send_button">Send</string>
+    <string name="chat_no_image_chosen">No image chosen</string>
 
     <!-- RESTAURANT DETAIL ACTIVITY-->
     <string name="restaurant_item_call">CALL</string>
@@ -97,6 +103,18 @@
     <string name="settings_save_ok">Settings saved!</string>
     <string name="settings_save_error_zoom">Minimum is %1$s, Maximum is %2$s</string>
     <string name="settings_save_error_radius">Minimum is %1$s, Maximum is %2$s</string>
+    <string name="button_update_account">Mettre à jour le nom d\'utilisateur</string>
+    <string name="button_delete_account">Supprimer mon compte</string>
+    <string name="text_input_username">Nom d\'utilisateur</string>
+    <string name="popup_message_confirmation_delete_account">Es-tu sûr(e) de vouloir supprimer ton compte ?</string>
+    <string name="popup_message_choice_yes">Oui !</string>
+    <string name="popup_message_choice_no">Non</string>
+
+    <!-- NOTIFICATIONS -->
+    <string name="notification_title" translatable="false">Go4Lunch</string>
+    <string name="notification_message">Here is a reminder of your choice for today</string>
+    <string name="notification_message_big">Here is a reminder of your choice for today : %1$s %2$s. Workmates participating : %3$s</string>
+    <string name="notification_message_no_workmates">None</string>
 
 
 </resources>

@@ -56,6 +56,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     //Identity each activity with a number
     private static final int ACTIVITY_SETTINGS = 5;
     private static final int ACTIVITY_DETAIL = 6 ;
+    public static final int ACTIVITY_CHAT = 8 ;
     private static final int ACTIVITY_LOGIN = 7 ;
 
     //Default data to create user
@@ -124,6 +125,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (activityIdentifier){
             case ACTIVITY_SETTINGS:
                 launchActivity(SettingActivity.class,null);
+                break;
+            case ACTIVITY_CHAT:
+                launchActivity(MessageActivity.class,null);
                 break;
             case ACTIVITY_DETAIL:
                 RestaurantsHelper.getBooking( Objects.requireNonNull( getCurrentUser() ).getUid(),getTodayDate()).addOnCompleteListener( bookingTask -> {
@@ -332,6 +336,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.action_workmates :
                 this.showWorkmatesFragment();
+                break;
+            case R.id.chat:
+                this.showActivity(ACTIVITY_CHAT);
                 break;
             default :
                 break;

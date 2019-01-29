@@ -1,20 +1,31 @@
 package com.example.megaport.go4lunch.main.Controllers.activities;
 
+import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.megaport.go4lunch.R;
 import com.example.megaport.go4lunch.main.Api.UserHelper;
 import com.example.megaport.go4lunch.main.Utils.Filters;
+import com.example.megaport.go4lunch.main.Utils.NotificationHelper;
 import com.example.megaport.go4lunch.main.View.ViewModels.CommunicationViewModel;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,12 +41,20 @@ public class SettingActivity extends BaseActivity {
     @BindView(R.id.settings_zoom_edit_layout) TextInputLayout mZoomEditLayout;
     @BindView(R.id.settings_radius_edit_layout) TextInputLayout mRadiusEditLayout;
 
+    @BindView( R.id.settings_profile_img ) ImageView mImageViewProfile;
+    @BindView( R.id.settings_username ) TextView mTextViewUsername;
+    @BindView( R.id.setting_user_email ) TextView mTextViewEmail;
+
     private static final String ZOOM_MIN_VALUE = "6";
     private static final String ZOOM_MAX_VALUE = "18";
     private static final String RADIUS_MIN_VALUE = "150";
     private static final String RADIUS_MAX_VALUE = "10000";
+    public static final long INTERVAL = AlarmManager.INTERVAL_FIFTEEN_MINUTES;
 
     protected CommunicationViewModel mViewModel;
+    private NotificationHelper mNotificationHelper;
+
+    public static final int DELETE_USER_TASK = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +65,11 @@ public class SettingActivity extends BaseActivity {
 
         mViewModel = ViewModelProviders.of(this).get(CommunicationViewModel.class);
 
+        this.updateUIWhenCreating();
         this.configureToolbar();
         this.retrieveUserSettings();
         this.setListenerAndFilters();
+        this.createNotificationHelper();
     }
 
     // -------------
@@ -75,12 +96,47 @@ public class SettingActivity extends BaseActivity {
                 mZoomEditText.setText( Objects.requireNonNull( Objects.requireNonNull( documentSnapshot.getData() ).get( "defaultZoom" ) ).toString());
                 mRadiusEditText.setText( Objects.requireNonNull( documentSnapshot.getData().get( "searchRadius" ) ).toString());
 
+                if (documentSnapshot.getData().get("notificationOn").equals(true)){
+                    mSwitch.setChecked(true);
+                    mNotificationHelper.scheduleRepeatingNotification();
+                }else{
+                    mSwitch.setChecked(false);
+                    mNotificationHelper.cancelAlarmRTC();
+                }
+
                 mViewModel.updateCurrentUserZoom(Integer.parseInt( Objects.requireNonNull( documentSnapshot.getData().get( "defaultZoom" ) ).toString()));
                 mViewModel.updateCurrentUserRadius(Integer.parseInt( Objects.requireNonNull( documentSnapshot.getData().get( "searchRadius" ) ).toString()));
             } else {
                 Log.e("TAG", "Current data: null");
             }
         } );
+    }
+
+    private void createNotificationHelper(){
+        mNotificationHelper = new NotificationHelper(getBaseContext());
+    }
+
+    // 1 - Update UI when activity is creating
+    private void updateUIWhenCreating(){
+
+        if (this.getCurrentUser() != null){
+
+            //Get picture URL from Firebase
+            if (this.getCurrentUser().getPhotoUrl() != null) {
+                Glide.with(this)
+                        .load(this.getCurrentUser().getPhotoUrl())
+                        .apply( RequestOptions.circleCropTransform())
+                        .into(mImageViewProfile);
+            }
+
+            //Get email from Firebase
+            String email = TextUtils.isEmpty(this.getCurrentUser().getEmail()) ? getString(R.string.info_no_email_found) : this.getCurrentUser().getEmail();
+            String name = TextUtils.isEmpty(this.getCurrentUser().getDisplayName()) ? getString(R.string.info_no_username_found) : this.getCurrentUser().getDisplayName();
+
+            //Update views with data
+            mTextViewEmail.setText(email);
+            mTextViewUsername.setText(name);
+        }
     }
 
 
@@ -127,6 +183,12 @@ public class SettingActivity extends BaseActivity {
             error = true;
         }
 
+        if (mSwitch.isChecked()){
+            mNotificationHelper.scheduleRepeatingNotification();
+        }else{
+            mNotificationHelper.cancelAlarmRTC();
+        }
+
 
         if (!(error)){
             UserHelper.updateUserSettings( Objects.requireNonNull( getCurrentUser() ).getUid(),zoom,mSwitch.isChecked(),radius).addOnSuccessListener(
@@ -135,6 +197,43 @@ public class SettingActivity extends BaseActivity {
                         Toast.makeText(this, getResources().getString(R.string.settings_save_ok), Toast.LENGTH_SHORT).show();
                     });
         }
+    }
+
+    @OnClick(R.id.profile_activity_button_delete)
+    public void onClickDeleteButton(){
+        new AlertDialog.Builder( this )
+                .setMessage( R.string.popup_message_confirmation_delete_account )
+                .setPositiveButton( R.string.popup_message_choice_yes, (dialog, which) -> deleteUserFromFirebase() )
+                .setNegativeButton( R.string.popup_message_choice_no, null )
+                .show();
+    }
+
+    private void deleteUserFromFirebase(){
+        if(this.getCurrentUser() != null) {
+            UserHelper.deleteUser( this.getCurrentUser().getUid() ).addOnFailureListener( this.onFailureListener() );
+
+            AuthUI.getInstance()
+                    .delete( this )
+                    .addOnSuccessListener( this, this.updateUIAfterRESTRequestsCompleted(DELETE_USER_TASK));
+        }
+    }
+
+    private OnSuccessListener<Void> updateUIAfterRESTRequestsCompleted(final int origin){
+        return aVoid -> {
+            switch (origin){
+                case DELETE_USER_TASK:
+                    finish();
+                    this.returnLoginActivity();
+                    break;
+                default:
+                    break;
+            }
+        };
+    }
+
+    private void returnLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
 

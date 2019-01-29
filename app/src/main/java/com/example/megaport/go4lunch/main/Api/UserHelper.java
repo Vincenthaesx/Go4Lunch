@@ -41,4 +41,10 @@ public class UserHelper {
                 );
     }
 
+    // DELETE --------
+
+    public static Task<Void> deleteUser(String uid){
+        return UserHelper.getUsersCollection().document(uid).delete();
+    }
+
 }

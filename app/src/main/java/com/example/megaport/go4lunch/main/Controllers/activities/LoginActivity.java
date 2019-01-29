@@ -53,7 +53,7 @@ public class LoginActivity extends BaseActivity {
                         .setTheme(R.style.LoginTheme)
                         .setAvailableProviders(
                                 Arrays.asList(new AuthUI.IdpConfig.FacebookBuilder().build(),        // FACEBOOK
-                                        new AuthUI.IdpConfig.GoogleBuilder().build()))               // GOOGLE
+                                              new AuthUI.IdpConfig.GoogleBuilder().build()))         // GOOGLE
 
                         .setIsSmartLockEnabled(false, true)
                         .setLogo(R.drawable.go4lunch)

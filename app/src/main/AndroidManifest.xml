@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -20,6 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".main.Controllers.activities.MessageActivity"
+            android:label="@string/chat"
+            android:parentActivityName=".main.Controllers.activities.MainActivity">
+        </activity>
 
         <activity
             android:name=".main.Controllers.activities.SettingActivity"
@@ -40,14 +45,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".main.Controllers.activities.MainActivity"
-            android:label="I&apos;m Hungry !"></activity>
+        <activity android:name=".main.Controllers.activities.MainActivity">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
         <activity android:name=".main.Controllers.activities.DetailActivity" />
         <activity
             android:name=".main.Controllers.activities.WebViewActivity"
             android:label="@string/label_website"
             android:parentActivityName=".main.Controllers.activities.DetailActivity" />
+
+        <receiver android:name=".main.Utils.AlarmReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

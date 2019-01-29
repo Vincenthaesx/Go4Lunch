@@ -17,7 +17,7 @@ interface LunchService {
 
     // MAP INFO
 
-    @GET("https://maps.googleapis.com/maps/api/place/search/json")
+    @GET("nearbysearch/json?")
     Observable<MapPlacesInfo> getNearbyPlaces(@Query("location") String location, @Query("radius") int radius, @Query("type") String type, @Query("key") String key);
 
     // PLACE INFO

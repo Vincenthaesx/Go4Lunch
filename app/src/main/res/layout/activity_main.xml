@@ -40,6 +40,7 @@
             app:itemIconTint="@drawable/nav_item_state_list"
             app:itemTextColor="@drawable/nav_item_state_list"
             app:menu="@menu/bottom_navigation_menu"
+            app:labelVisibilityMode="labeled"
             />
 
     </android.support.constraint.ConstraintLayout>

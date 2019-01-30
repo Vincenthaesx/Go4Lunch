@@ -50,7 +50,11 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+
         <activity android:name=".main.Controllers.activities.DetailActivity" />
+
+        <activity android:name=".main.Controllers.activities.BaseActivity" />
+
         <activity
             android:name=".main.Controllers.activities.WebViewActivity"
             android:label="@string/label_website"

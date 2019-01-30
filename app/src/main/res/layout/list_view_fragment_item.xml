@@ -7,6 +7,14 @@
     android:layout_marginBottom="@dimen/margin_to_parent"
     >
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="10dp"
+        android:background="#cfcfcf"
+        app:layout_constraintBottom_toTopOf="@+id/item_textview_name"
+        app:layout_constraintStart_toStartOf="@+id/item_textview_opening" />
+
     <!-- FIRST LINE -->
 
     <TextView

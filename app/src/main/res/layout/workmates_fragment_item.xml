@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="72dp"
+        android:background="#e3e3e3"
+        app:layout_constraintStart_toStartOf="@id/mates_main_picture"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/mates_main_picture"
@@ -27,5 +37,6 @@
         app:layout_constraintTop_toTopOf="@id/mates_main_picture"
         android:layout_marginRight="@dimen/margin_to_parent"
         android:layout_marginLeft="8dp" />
+
 
 </android.support.constraint.ConstraintLayout>

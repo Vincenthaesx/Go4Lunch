@@ -7,16 +7,16 @@
         <item
             android:id="@+id/activity_main_drawer_dining"
             android:icon="@drawable/dining"
-            android:title="@string/your_lunch" />
+            android:title="@string/drawer_lunch" />
         <item
             android:id="@+id/activity_main_drawer_settings"
             android:icon="@drawable/settings"
-            android:title="@string/settings" />
+            android:title="@string/drawer_settings" />
 
         <item
             android:id="@+id/activity_main_drawer_logout"
             android:icon="@drawable/power"
-            android:title="@string/logout" />
+            android:title="@string/drawer_logout" />
 
     </group>
 

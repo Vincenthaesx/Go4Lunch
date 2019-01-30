@@ -25,7 +25,8 @@
         app:layout_constraintTop_toBottomOf="@id/slider"
         app:layout_constraintBottom_toBottomOf="@id/slider"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginRight="16dp" />
+        android:layout_marginRight="16dp"
+        android:focusable="true" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/restaurant_info"

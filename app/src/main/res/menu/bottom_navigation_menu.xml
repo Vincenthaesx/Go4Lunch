@@ -5,19 +5,19 @@
         android:id="@+id/action_map"
         android:enabled="true"
         android:icon="@drawable/baseline_map"
-        android:title="@string/bottom_navigation_menu_map_view"
+        android:title="@string/bottom_menu_map"
         app:showAsAction="always|withText" />
     <item
         android:id="@+id/action_list_view"
         android:enabled="true"
         android:icon="@drawable/baseline_format_list"
-        android:title="@string/bottom_navigation_menu_list_view"
+        android:title="@string/bottom_menu_list"
         app:showAsAction="always|withText" />
     <item
         android:id="@+id/action_workmates"
         android:enabled="true"
         android:icon="@drawable/baseline_group"
-        android:title="@string/bottom_navigation_menu_workmates"
+        android:title="@string/bottom_menu_mates"
         app:showAsAction="always|withText" />
     <item
         android:id="@+id/chat"

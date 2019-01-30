@@ -13,7 +13,7 @@ import java.util.List;
 public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesViewHolder>{
 
     // FOR DATA
-    private List<User> mResults;
+    private final List<User> mResults;
 
     // CONSTRUCTOR
     public WorkmatesAdapter(List<User> result) {

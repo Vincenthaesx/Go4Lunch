@@ -51,10 +51,10 @@ public class SettingActivity extends BaseActivity {
     private static final String RADIUS_MAX_VALUE = "10000";
     public static final long INTERVAL = AlarmManager.INTERVAL_FIFTEEN_MINUTES;
 
-    protected CommunicationViewModel mViewModel;
+    private CommunicationViewModel mViewModel;
     private NotificationHelper mNotificationHelper;
 
-    public static final int DELETE_USER_TASK = 20;
+    private static final int DELETE_USER_TASK = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +96,7 @@ public class SettingActivity extends BaseActivity {
                 mZoomEditText.setText( Objects.requireNonNull( Objects.requireNonNull( documentSnapshot.getData() ).get( "defaultZoom" ) ).toString());
                 mRadiusEditText.setText( Objects.requireNonNull( documentSnapshot.getData().get( "searchRadius" ) ).toString());
 
-                if (documentSnapshot.getData().get("notificationOn").equals(true)){
+                if (Objects.requireNonNull( documentSnapshot.getData().get( "notificationOn" ) ).equals(true)){
                     mSwitch.setChecked(true);
                     mNotificationHelper.scheduleRepeatingNotification();
                 }else{

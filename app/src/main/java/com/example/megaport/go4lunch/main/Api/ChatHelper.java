@@ -3,7 +3,7 @@ package com.example.megaport.go4lunch.main.Api;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class ChatHelper {
+class ChatHelper {
     private static final String COLLECTION_NAME = "chats";
 
     // --- COLLECTION REFERENCE ---

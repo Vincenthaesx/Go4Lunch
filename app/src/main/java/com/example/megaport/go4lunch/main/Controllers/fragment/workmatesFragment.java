@@ -101,7 +101,7 @@ public class workmatesFragment extends BaseFragment {
             if (bookingTask.isSuccessful()){
                 if(!(Objects.requireNonNull( bookingTask.getResult() ).isEmpty())){
                     for (QueryDocumentSnapshot booking : bookingTask.getResult()){
-                        showBookedRestaurantByUser(booking.getData().get( "restaurantId" ).toString());
+                        showBookedRestaurantByUser( Objects.requireNonNull( booking.getData().get( "restaurantId" ) ).toString());
                     }
                 } else{
                     Toast.makeText( getContext(), getResources().getString( R.string.mates_hasnt_decided, user.getUsername() ), Toast.LENGTH_SHORT ).show();
@@ -129,10 +129,10 @@ public class workmatesFragment extends BaseFragment {
             if (task.isSuccessful()){
                 mUsers.clear();
                 for (QueryDocumentSnapshot document : Objects.requireNonNull( task.getResult() )) {
-                    if (!(mCommunicationViewModel.getCurrentUserUID().equals(document.getData().get("uid").toString()))){
-                        String uid = document.getData().get("uid").toString();
-                        String username = document.getData().get("username").toString();
-                        String urlPicture = document.getData().get("urlPicture").toString();
+                    if (!(mCommunicationViewModel.getCurrentUserUID().equals( Objects.requireNonNull( document.getData().get( "uid" ) ).toString()))){
+                        String uid = Objects.requireNonNull( document.getData().get( "uid" ) ).toString();
+                        String username = Objects.requireNonNull( document.getData().get( "username" ) ).toString();
+                        String urlPicture = Objects.requireNonNull( document.getData().get( "urlPicture" ) ).toString();
                         User userToAdd = new User(uid,username,urlPicture, MainActivity.DEFAULT_SEARCH_RADIUS,MainActivity.DEFAULT_ZOOM,false);
                         mUsers.add(userToAdd);
                     }

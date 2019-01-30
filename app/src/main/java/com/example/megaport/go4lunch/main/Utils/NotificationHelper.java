@@ -9,11 +9,11 @@ import static android.content.Context.ALARM_SERVICE;
 
 public class NotificationHelper {
 
-    private Context mContext;
+    private final Context mContext;
     private AlarmManager alarmManagerRTC;
     private PendingIntent alarmIntentRTC;
 
-    public static int ALARM_TYPE_RTC = 100;
+    public static final int ALARM_TYPE_RTC = 100;
 
     public NotificationHelper(Context context) {
         mContext = context;

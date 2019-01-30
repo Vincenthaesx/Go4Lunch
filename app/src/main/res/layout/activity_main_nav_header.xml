@@ -21,7 +21,6 @@
         android:layout_margin="@dimen/margin">
 
         <ImageView
-            android:contentDescription="@string/navigation_drawer_img_description"
             android:id="@+id/nav_header_profile_img"
             android:layout_marginTop="30dp"
             android:layout_width="@dimen/icon_size"
@@ -36,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:textColor="@android:color/white"
             android:layout_toEndOf="@+id/nav_header_profile_img"
             android:layout_toRightOf="@+id/nav_header_profile_img" />
@@ -46,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:textColor="@android:color/white"
             android:layout_below="@+id/nav_header_username"
             android:layout_toEndOf="@+id/nav_header_profile_img"

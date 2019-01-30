@@ -30,8 +30,8 @@ import io.reactivex.observers.DisposableObserver;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
-    public static final String NOTIFICATION_CHANNEL_ID = "5000";
-    public static final String NOTIFICATION_CHANNEL_NAME = "Go4Lunch";
+    private static final String NOTIFICATION_CHANNEL_ID = "5000";
+    private static final String NOTIFICATION_CHANNEL_NAME = "Go4Lunch";
 
     private NotificationCompat.Builder mBuilder;
     private List<String> usersList;
@@ -129,7 +129,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     // Create and push notification
 
-    public void sendNotification(String users)
+    private void sendNotification(String users)
     {
         Log.e("TAG", "sendNotification: USERS " + users );
         // Creates an explicit intent for an Activity in your app
@@ -156,7 +156,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         Objects.requireNonNull( notificationManager ).notify(NotificationHelper.ALARM_TYPE_RTC, repeatedNotification);
     }
 
-    public NotificationCompat.Builder buildLocalNotification(Context mContext, PendingIntent pendingIntent, String users) {
+    private NotificationCompat.Builder buildLocalNotification(Context mContext, PendingIntent pendingIntent, String users) {
         Log.e("TAG", "buildLocalNotification: USERS " + users );
         mBuilder = new NotificationCompat.Builder(mContext,NOTIFICATION_CHANNEL_ID);
         mBuilder.setSmallIcon(R.mipmap.ic_launcher);
@@ -170,7 +170,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         return mBuilder;
     }
 
-    protected String getTodayDate(){
+    private String getTodayDate(){
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         return df.format(c.getTime());

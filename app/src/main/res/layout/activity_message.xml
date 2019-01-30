@@ -5,7 +5,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.ChatActivity">
+    tools:context=".main.Controllers.activities.MessageActivity">
 
     <include
         layout="@layout/toolbar"
@@ -36,7 +36,8 @@
         android:layout_height="50dip"
         android:layout_margin="@dimen/margin_to_parent"
         app:layout_constraintBottom_toBottomOf="@id/activity_chat_recycler_view_container"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="TODO" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/activity_chat_add_message_container"
@@ -60,7 +61,8 @@
             android:tint="@color/colorPrimaryDark"
             android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="TODO" />
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/activity_chat_message_edit_text"
@@ -87,7 +89,8 @@
             android:src="@drawable/baseline_send_black_24"
             android:tint="@color/colorPrimaryDark"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="TODO" />
 
     </android.support.constraint.ConstraintLayout>
 

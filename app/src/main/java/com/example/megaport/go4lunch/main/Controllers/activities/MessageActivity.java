@@ -25,15 +25,13 @@ import com.example.megaport.go4lunch.main.Models.Message;
 import com.example.megaport.go4lunch.main.Models.User;
 import com.example.megaport.go4lunch.main.View.ChatAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.util.Objects;
 import java.util.UUID;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -130,7 +128,7 @@ public class MessageActivity extends BaseActivity implements ChatAdapter.Listene
     // --------------------
 
     private void getCurrentUserFromFirestore(){
-        UserHelper.getUser(getCurrentUser().getUid()).addOnSuccessListener( documentSnapshot -> modelCurrentUser = documentSnapshot.toObject(User.class) );
+        UserHelper.getUser( Objects.requireNonNull( getCurrentUser() ).getUid()).addOnSuccessListener( documentSnapshot -> modelCurrentUser = documentSnapshot.toObject(User.class) );
     }
 
     //  Upload a picture in Firebase and send a message
@@ -143,14 +141,14 @@ public class MessageActivity extends BaseActivity implements ChatAdapter.Listene
         Task<Uri> urlTask = uploadTask.continueWithTask( task -> {
             if (!task.isSuccessful()) {
                 Log.e("CHAT_ACTIVITY_TAG", "Error TASK_URI : " + task.getException() );
-                throw task.getException();
+                throw Objects.requireNonNull( task.getException() );
             }
             // Continue with the task to get the download URL
             return mImageRef.getDownloadUrl();
         } ).addOnCompleteListener( task -> {
             if (task.isSuccessful()) {
                 Uri downloadUri = task.getResult();
-                MessageHelper.createMessageWithImageForChat(downloadUri.toString(), message, modelCurrentUser).addOnFailureListener(onFailureListener());
+                MessageHelper.createMessageWithImageForChat( Objects.requireNonNull( downloadUri ).toString(), message, modelCurrentUser).addOnFailureListener(onFailureListener());
             } else {
                 Log.e("CHAT_ACTIVITY_TAG", "Error ON_COMPLETE : " + task.getException() );
             }
@@ -162,7 +160,7 @@ public class MessageActivity extends BaseActivity implements ChatAdapter.Listene
     // --------------------
 
     private void configureRecyclerView(){
-        this.mChatAdapter = new ChatAdapter(generateOptionsForAdapter(MessageHelper.getAllMessageForChat()), Glide.with(this), this, this.getCurrentUser().getUid());
+        this.mChatAdapter = new ChatAdapter(generateOptionsForAdapter(MessageHelper.getAllMessageForChat()), Glide.with(this), this, Objects.requireNonNull( this.getCurrentUser() ).getUid());
         mChatAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {

@@ -2,7 +2,7 @@
     <string name="app_name">Go4Lunch!</string>
 
     <!-- POPUP TITLE PERM -->
-    <string name="popup_title_perm_access">This application need permissions to work correctly.</string>
+    <string name="popup_title_perm_access">This application need permissions to work correctly</string>
     <string name="popup_title_permission_files_access">This application needs permissions to access your images</string>
 
     <!-- FACEBOOK PURPOSE -->
@@ -15,37 +15,45 @@
     <string name="chat">Chat</string>
     <string name="search">Search</string>
 
-    <string name="drawer_no_restaurant_booked">You don\'t booked any restaurant for today!</string>
-
-    <!-- MAIN ACTIVITY -->
-    <string name="error_unknown_error">Une erreur inconnue s\'est produite&#8230;</string>
-    <string name="connection_succeed">Authentification réussie !</string>
-    <string name="error_authentication_canceled">Authentification annulée&#8230;</string>
-    <string name="your_lunch">VOTRE MENU</string>
-    <string name="settings">OPTIONS</string>
-    <string name="logout">DECONNECTION</string>
-    <string name="info_no_email_found">Auncune adresse email</string>
-    <string name="info_no_username_found">Aucun nom d\'utilisateur</string>
-    <string name="error_no_internet">No internet connection!</string>
-    <string name="bottom_menu_chat">Chat</string>
-
-    <!-- Used in NavigationDrawer -->
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
-    <string name="navigation_drawer_img_description">Profile Image</string>
-
-    <!-- BOTTOM NAVIGATION VIEW -->
-    <string name="bottom_navigation_menu_map_view">Map View</string>
-    <string name="bottom_navigation_menu_list_view">List View</string>
-    <string name="bottom_navigation_menu_workmates">Workmates</string>
-    <string name="action_search">search action</string>
-    <string name="rational_string">Without these permissions, the application is unable to function properly. They are needed to use geolocation services. Please allow them in order to use this application in the best possible conditions.</string>
-
     <!-- ERROR TEXT -->
     <string name="http_error_message">HttpException, Error code : %1$i</string>
     <string name="timeout_error_message">Request timeout, please check your internet connection</string>
     <string name="exception_error_message">An error occurred, please check your internet connection</string>
     <string name="generic_error_message">An error occurred, please try again</string>
+
+    <string name="no_restaurant_error_message">No restaurants found, try to change your search radius settings</string>
+
+    <!-- TOOLBAR -->
+    <string name="toolbar_search_title">Search restaurants</string>
+    <string name="toolbar_search_hint">Search</string>
+
+    <string name="search_too_short">Your query must be 3 character length minimum</string>
+    <string name="search_no_result">No restaurant match your query</string>
+
+    <!-- BOTTOM MENU -->
+    <string name="bottom_menu_map">Map view</string>
+    <string name="bottom_menu_list">List view</string>
+    <string name="bottom_menu_mates">Workmates</string>
+    <string name="bottom_menu_chat">Chat</string>
+
+    <!-- NAVIGATION DRAWER -->
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="drawer_lunch">YOUR LUNCH</string>
+    <string name="drawer_settings">SETTINGS</string>
+    <string name="drawer_logout">LOGOUT</string>
+    <string name="info_no_email_found">Email not found</string>
+    <string name="info_no_username_found">Username not found</string>
+
+    <string name="error_authentication_canceled">Authentication canceled</string>
+    <string name="error_no_internet">No internet connection!</string>
+    <string name="error_unknown_error">An unknown error has occurred</string>
+
+    <string name="drawer_no_restaurant_booked">You don\'t booked any restaurant for today!</string>
+
+    <!-- WORKMATES LIST -->
+    <string name="mates_is_eating_at">%1$s is eating at %2$s</string>
+    <string name="mates_hasnt_decided">%1$s hasn\'t decided yet</string>
 
     <!-- RESTAURANT LIST -->
     <string name="restaurant_closed">Closed</string>
@@ -54,25 +62,12 @@
     <string name="restaurant_open_until">Open until %1$s</string>
     <string name="restaurant_closing_soon">Closing soon (%1$s)</string>
     <string name="restaurant_mates_number">(%1$d)</string>
-    <string name="no_restaurant_error_message">No restaurants found, try to change your search radius settings</string>
-
-    <!-- TOOLBAR -->
-    <string name="toolbar_search_title">Search restaurants</string>
-    <string name="toolbar_search_hint">Search</string>
-
-    <!-- CHAT ACTIVITY -->
-    <string name="chat_input_text_hint">Compose your message</string>
-    <string name="chat_send_button">Send</string>
-    <string name="chat_no_image_chosen">No image chosen</string>
 
     <!-- RESTAURANT DETAIL ACTIVITY-->
     <string name="restaurant_item_call">CALL</string>
     <string name="restaurant_item_like">LIKE</string>
     <string name="restaurant_item_dislike">UNLIKE</string>
     <string name="restaurant_item_website">WEBSITE</string>
-    <string name="label_website">Website</string>
-    <string name="search_too_short">Your query must be 3 character length minimum</string>
-    <string name="search_no_result">No restaurant match your query</string>
 
     <string name="restaurant_error_retrieving_info">Unable to retrieve some user information</string>
 
@@ -88,27 +83,18 @@
     <string name="restaurant_detail_no_phone">No phone number available</string>
 
     <string name="restaurant_detail_recyclerview">%1$s is joining!</string>
-    <string name="label_settings">Settings</string>
-
-    <!-- WORKMATES LIST -->
-    <string name="mates_is_eating_at">%1$s is eating at %2$s</string>
-    <string name="mates_hasnt_decided">%1$s hasn\'t decided yet</string>
 
     <!-- SETTINGS ACTIVITY -->
     <string name="settings_zoom_title">Default zoom on map</string>
     <string name="settings_search_radius_title">Restaurants search radius</string>
     <string name="settings_notification_title">Notifications</string>
     <string name="settings_notification_text">Each day you will have a reminder for your restaurant\'s choice, if you have selected one</string>
-    <string name="settings_save_text">Save</string>
-    <string name="settings_save_ok">Settings saved!</string>
+
     <string name="settings_save_error_zoom">Minimum is %1$s, Maximum is %2$s</string>
     <string name="settings_save_error_radius">Minimum is %1$s, Maximum is %2$s</string>
-    <string name="button_update_account">Mettre à jour le nom d\'utilisateur</string>
-    <string name="button_delete_account">Supprimer mon compte</string>
-    <string name="text_input_username">Nom d\'utilisateur</string>
-    <string name="popup_message_confirmation_delete_account">Es-tu sûr(e) de vouloir supprimer ton compte ?</string>
-    <string name="popup_message_choice_yes">Oui !</string>
-    <string name="popup_message_choice_no">Non</string>
+
+    <string name="settings_save_text">Save</string>
+    <string name="settings_save_ok">Settings saved!</string>
 
     <!-- NOTIFICATIONS -->
     <string name="notification_title" translatable="false">Go4Lunch</string>
@@ -116,5 +102,26 @@
     <string name="notification_message_big">Here is a reminder of your choice for today : %1$s %2$s. Workmates participating : %3$s</string>
     <string name="notification_message_no_workmates">None</string>
 
+    <!-- WEBVIEW ACTIVITY -->
+    <string name="error_display_website">Unable to display website, please try again</string>
+
+    <!-- CHAT ACTIVITY -->
+    <string name="chat_input_text_hint">Compose your message</string>
+    <string name="chat_send_button">Send</string>
+    <string name="chat_no_image_chosen">No image chosen</string>
+
+    <!-- ACTIVITY LABEL -->
+    <string name="label_settings">Settings</string>
+    <string name="label_website">Website</string>
+    <string name="label_chat_detail_activity">Conversation</string>
+    <string name="button_delete_account">DELETE MY ACCOUNT</string>
+
+    <string name="popup_message_confirmation_delete_account">Are you sure you want to delete your account ?</string>
+    <string name="popup_message_choice_yes">Yes !</string>
+    <string name="popup_message_choice_no">No</string>
+
+    <string name="settings_zoom_text">Default zoom on the map</string>
+    <string name="settings_search_radius_text">Search radius of restaurants</string>
+    <string name="restaurant_already_booked">You have already booked this restaurant for today!</string>
 
 </resources>

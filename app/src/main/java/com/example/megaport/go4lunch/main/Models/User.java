@@ -8,11 +8,8 @@ public class User {
     private String username;
     @Nullable
     private String urlPicture;
-    @Nullable
     private int searchRadius;
-    @Nullable
     private int defaultZoom;
-    @Nullable
     private boolean isNotificationOn;
 
     public User() { }
@@ -21,7 +18,7 @@ public class User {
         this.uid = uid;
     }
 
-    public User(String uid, String username, @Nullable String urlPicture, @Nullable int searchRadius, @Nullable int defaultZoom, @Nullable boolean isNotificationOn) {
+    public User(String uid, String username, @Nullable String urlPicture, int searchRadius, int defaultZoom, boolean isNotificationOn) {
         this.uid = uid;
         this.username = username;
         this.urlPicture = urlPicture;
@@ -36,17 +33,14 @@ public class User {
     @Nullable
     public String getUrlPicture() { return urlPicture; }
 
-    @Nullable
     public int getSearchRadius() {
         return searchRadius;
     }
 
-    @Nullable
     public int getDefaultZoom() {
         return defaultZoom;
     }
 
-    @Nullable
     public boolean isNotificationOn() {
         return isNotificationOn;
     }
@@ -56,15 +50,15 @@ public class User {
     public void setUid(String uid) { this.uid = uid; }
     public void setUrlPicture(@Nullable String urlPicture) { this.urlPicture = urlPicture; }
 
-    public void setSearchRadius(@Nullable int searchRadius) {
+    public void setSearchRadius(int searchRadius) {
         this.searchRadius = searchRadius;
     }
 
-    public void setDefaultZoom(@Nullable int defaultZoom) {
+    public void setDefaultZoom(int defaultZoom) {
         this.defaultZoom = defaultZoom;
     }
 
-    public void setNotificationOn(@Nullable boolean notificationOn) {
+    public void setNotificationOn(boolean notificationOn) {
         isNotificationOn = notificationOn;
     }
 }

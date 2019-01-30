@@ -20,7 +20,7 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<Message,ChatViewHolder
     private final String idCurrentUser;
 
     //FOR COMMUNICATION
-    private Listener callback;
+    private final Listener callback;
 
     public ChatAdapter(@NonNull FirestoreRecyclerOptions<Message> options, RequestManager glide, Listener callback, String idCurrentUser) {
         super(options);
@@ -34,8 +34,9 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<Message,ChatViewHolder
         holder.updateWithMessage(model, this.idCurrentUser, this.glide);
     }
 
+    @NonNull
     @Override
-    public ChatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ChatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ChatViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate( R.layout.activity_message_item, parent, false));
     }

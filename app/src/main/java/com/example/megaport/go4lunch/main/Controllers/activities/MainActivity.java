@@ -56,7 +56,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     //Identity each activity with a number
     private static final int ACTIVITY_SETTINGS = 5;
     private static final int ACTIVITY_DETAIL = 6 ;
-    public static final int ACTIVITY_CHAT = 8 ;
+    private static final int ACTIVITY_CHAT = 8 ;
     private static final int ACTIVITY_LOGIN = 7 ;
 
     //Default data to create user
@@ -137,7 +137,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         }else{
                             Map<String,Object> extra = new HashMap<>();
                             for (QueryDocumentSnapshot booking : bookingTask.getResult()){
-                                extra.put("PlaceDetailResult",booking.getData().get("restaurantId"));
+                                extra.put("PlaceDetailResult", Objects.requireNonNull( booking.getData().get( "restaurantId" ) ) );
                             }
                             launchActivity( DetailActivity.class,extra);
                         }
@@ -258,8 +258,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             if (documentSnapshot != null && documentSnapshot.exists()) {
                 Log.e("MAIN_ACTIVITY", "Current data: " + documentSnapshot.getData());
-                mViewModel.updateCurrentUserZoom(Integer.parseInt( Objects.requireNonNull( documentSnapshot.getData() ).get("defaultZoom").toString()));
-                mViewModel.updateCurrentUserRadius(Integer.parseInt(documentSnapshot.getData().get("searchRadius").toString()));
+                mViewModel.updateCurrentUserZoom(Integer.parseInt( Objects.requireNonNull( Objects.requireNonNull( documentSnapshot.getData() ).get( "defaultZoom" ) ).toString()));
+                mViewModel.updateCurrentUserRadius(Integer.parseInt( Objects.requireNonNull( documentSnapshot.getData().get( "searchRadius" ) ).toString()));
             } else {
                 Log.e("MAIN_ACTIVITY", "Current data: null");
             }

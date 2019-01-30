@@ -106,14 +106,14 @@ public class mapViewFragment extends BaseFragment implements GoogleApiClient.OnC
         menu.clear();
         inflater.inflate(R.menu.menu_main, menu);
 
-        SearchManager searchManager = (SearchManager) getContext().getSystemService( Context.SEARCH_SERVICE);
+        SearchManager searchManager = (SearchManager) Objects.requireNonNull( getContext() ).getSystemService( Context.SEARCH_SERVICE);
 
         MenuItem item = menu.findItem(R.id.menu_search);
-        SearchView searchView = new SearchView(((MainActivity) getContext()).getSupportActionBar().getThemedContext());
+        SearchView searchView = new SearchView( Objects.requireNonNull( ((MainActivity) getContext()).getSupportActionBar() ).getThemedContext());
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
         item.setActionView(searchView);
         searchView.setQueryHint(getResources().getString(R.string.toolbar_search_hint));
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(((MainActivity) getContext()).getComponentName()));
+        searchView.setSearchableInfo( Objects.requireNonNull( searchManager ).getSearchableInfo(((MainActivity) getContext()).getComponentName()));
 
         searchView.setIconifiedByDefault(false);// Do not iconify the widget; expand it by default
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

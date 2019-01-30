@@ -278,12 +278,12 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
                 }else{
                     for (QueryDocumentSnapshot restaurant : restaurantTask.getResult()){
                         Log.e("TAG", "DETAIL_ACTIVITY | Restaurant : " + restaurant.getData() );
-                        UserHelper.getUser(restaurant.getData().get("userId").toString()).addOnCompleteListener( userTask -> {
+                        UserHelper.getUser( Objects.requireNonNull( restaurant.getData().get( "userId" ) ).toString()).addOnCompleteListener( userTask -> {
                             if (userTask.isSuccessful()){
                                 Log.e("TAG", "DETAIL_ACTIVITY | User : " + userTask.getResult() );
-                                String uid = Objects.requireNonNull( Objects.requireNonNull( userTask.getResult() ).getData() ).get("uid").toString();
-                                String username = Objects.requireNonNull( userTask.getResult().getData() ).get("username").toString();
-                                String urlPicture = userTask.getResult().getData().get("urlPicture").toString();
+                                String uid = Objects.requireNonNull( Objects.requireNonNull( Objects.requireNonNull( userTask.getResult() ).getData() ).get( "uid" ) ).toString();
+                                String username = Objects.requireNonNull( Objects.requireNonNull( userTask.getResult().getData() ).get( "username" ) ).toString();
+                                String urlPicture = Objects.requireNonNull( userTask.getResult().getData().get( "urlPicture" ) ).toString();
                                 User userToAdd = new User(uid,username,urlPicture, MainActivity.DEFAULT_SEARCH_RADIUS,MainActivity.DEFAULT_ZOOM,false);
                                 mDetailUsers.add(userToAdd);
                             }
@@ -341,7 +341,7 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
                 if (Objects.requireNonNull( restaurantTask.getResult() ).size() == 1){ // User already booked a restaurant today
 
                     for (QueryDocumentSnapshot restaurant : restaurantTask.getResult()) {
-                        if (restaurant.getData().get("restaurantName").equals(restaurantName)){ // If booked restaurant is the same as restaurant we are trying to book
+                        if (Objects.requireNonNull( restaurant.getData().get( "restaurantName" ) ).equals(restaurantName)){ // If booked restaurant is the same as restaurant we are trying to book
                             this.displayFAB((R.drawable.baseline_clear_black_24),getResources().getColor(R.color.colorError));
                             if (tryingToBook){
                                 this.manageBooking(userId, restaurantId, restaurantName,restaurant.getId(),false,false,true);

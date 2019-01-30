@@ -33,9 +33,8 @@ public class NotificationHelper {
         //getting instance of AlarmManager service
         alarmManagerRTC = (AlarmManager) mContext.getSystemService(ALARM_SERVICE);
 
-        // UNCOMMENT TO SEND IMMEDIATELY
-        alarmManagerRTC.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1000 * 5, AlarmManager.INTERVAL_FIFTEEN_MINUTES, alarmIntentRTC);
-        //alarmManagerRTC.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntentRTC);
+        alarmManagerRTC.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntentRTC);
+
 
     }
 

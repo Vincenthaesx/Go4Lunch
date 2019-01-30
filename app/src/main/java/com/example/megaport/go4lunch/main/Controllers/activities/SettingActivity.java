@@ -1,6 +1,5 @@
 package com.example.megaport.go4lunch.main.Controllers.activities;
 
-import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -49,7 +48,6 @@ public class SettingActivity extends BaseActivity {
     private static final String ZOOM_MAX_VALUE = "18";
     private static final String RADIUS_MIN_VALUE = "150";
     private static final String RADIUS_MAX_VALUE = "10000";
-    public static final long INTERVAL = AlarmManager.INTERVAL_FIFTEEN_MINUTES;
 
     private CommunicationViewModel mViewModel;
     private NotificationHelper mNotificationHelper;
